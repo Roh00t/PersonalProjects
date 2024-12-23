@@ -1,0 +1,245 @@
+>> 
+
+============================================================
+ENCRYPTION ALGORITHM BENCHMARK
+============================================================
+
+Input Data Size: 17 bytes
+Number of iterations per algorithm: 5
+
+Running benchmarks...
+
+=== AES-256-GCM Encryption/Decryption ===
+Ciphertext (AES): 2992d247dc7b4978c54287b4b6c4667357
+Decrypted Text (AES): Confidential Data
+Execution Time: 53.817 ms
+
+=== Triple DES Encryption/Decryption ===
+Ciphertext (3DES): e147013e10355e9ecb671e272d9bee06a0
+Decrypted Text (3DES): Confidential Data
+Execution Time: 54.776 ms
+
+=== RC4 Encryption/Decryption ===
+Ciphertext (RC4): 303dd9852652de16de906e788211395940
+Decrypted Text (RC4): Confidential Data
+Execution Time: 26.634 ms
+
+=== Twofish Encryption/Decryption ===
+Ciphertext (Twofish): bb0b213811cdbc3d4902708f5e06e84b996b405177a6d65c32641eec714d8630
+Decrypted Text (Twofish): Confidential Data
+Execution Time: 53.885 ms
+
+=== ECC Digital Signature ===
+Digital Signature (ECC): 1d6df08248e2385525d7fa90fb52a6d34e37db7c76c10720374cce1a50b6788de91869b2fabaa6ed521637abc762a9f8d7f8874287874adf602d8052d92ac4c8
+ECC Signature Verified Successfully!
+Execution Time: 5.373 ms
+
+=== RSA-2048 Encryption/Decryption & Signature ===
+Encrypted Session Key (RSA): 96546d939894ad0187a2eb4863d4dd3b909f5ce69dd9d48899a09a0b2cbf07a63672408234d90f050eebc824261421928f54aaa41738faa7a3c06e66fa78fdf799524b1c2c521ed784ad878e1bd96b795c8a58c7e0caffc57b5f769344a672b89054bad0927665100dd4cdf546486130498145a43a6c35b2e98026140f3c31ab331f98bdd95281fe94ea342fcf2d94e179bc9e04ccce92798ecbf0f4a9bd74d0d87e2547a754139e9d21292a232df0fbfadf6e5fe04645ff9246c60a3737c950e3c1daefb2dfe752143106a1dcb333a2547147490c2a179c047e1a472cd88e3ef443fec590950d61f2c879ae8e9a627609af298d64f15c20228a0530647b302d
+Ciphertext (Hybrid RSA-AES): ae892d66caa934e42a66cb17f66c772813
+Digital Signature (RSA): 5bc1c617b6bd07182e86033b84516cccaf3a240807803d17b3407f8c1706805bf1cde4f199470b6b33405437fe8c6ffae4610e2c4b024f9425d172b08b3cbe7a0a395ea13245fa137e9682e3502ea52090f2cc72bce851e373a8bae63a3695e2638e8c2dc677254f09a5d94b6a163877bc3094e2f05a6f8293b41053151ead3b9d17f3c2587f75053b60a2e58ac054c8dd8460e732c69f022b034a4761a774b8f98993f23ceeea1080ed6989497a294d1ddc5e4eb3560730b06632a9883035328de141222611e41bd9333efe47c40091a769d66bccde8dabb2e50c6efac841bbbc34e6d44b3644fa51a97d497f4429696a5c60179e5a58b0f948cd12433f7c64
+Decrypted Text (RSA): Confidential Data
+RSA Signature Verified Successfully!
+Execution Time: 1233.395 ms
+
+=== AES-256-GCM Encryption/Decryption ===
+Ciphertext (AES): ac95374975d101435a0018620ebec58b12
+Decrypted Text (AES): Confidential Data
+Execution Time: 57.549 ms
+
+=== Triple DES Encryption/Decryption ===
+Ciphertext (3DES): 017f568df1137429fb84352af2eef81872
+Decrypted Text (3DES): Confidential Data
+Execution Time: 54.891 ms
+
+=== RC4 Encryption/Decryption ===
+Ciphertext (RC4): 561039ee317f513862f2c8e2f3a867e835
+Decrypted Text (RC4): Confidential Data
+Execution Time: 28.147 ms
+
+=== Twofish Encryption/Decryption ===
+Ciphertext (Twofish): 1b76e09a2adea8832f9f7f9e51ea412f391681f34cb5c2e254f911fd7ea12f54
+Decrypted Text (Twofish): Confidential Data
+Execution Time: 53.858 ms
+
+=== ECC Digital Signature ===
+Digital Signature (ECC): 25e16f06efc702216c64cc5424c675da73dc0f3675fdf851fab459d411737c1ec39c29c12ad26552bc5f2b1c1826cfab68499ba611610b1085db54460411f04c
+ECC Signature Verified Successfully!
+Execution Time: 2.734 ms
+
+=== RSA-2048 Encryption/Decryption & Signature ===
+Encrypted Session Key (RSA): 227819a0c2dbdeb56873a82c2b5801c31f722bf8546dd96776dbe5b0fc8d3a4598ca398ab3545a516562e78bfdaf51a37b6aeebbf2293e8bd780ea664169f08bf1fda0f786c66ae589833d849b9ce1cd394470ec54f500ca04d3090fc3e8e40fcd6b81e5b253184a6f6ef40e1eabe758d3b6bee0eb316a61e8c46579fe7a467b87a2e1bc69d6701918c70e078d59a48b373f75e60d5ee90349eefcc8a1da99b3acf8771a50b5cb5619fc4f058a66b03131352453a21cbda4a95e4f189b926808f6c147ffe4015cb21095f5cfd2f4c89ef2ae3ea325863aadb8d341cb8154779eac8fbde871f3424b8580f2698c53c1576105b072c64e328900da0a3334edb780
+Ciphertext (Hybrid RSA-AES): d9bfec2b43aa6e6e00e6f3747bd88eae26
+Digital Signature (RSA): 00e163d0e0bd587fe46edc28ce749d55719e9562544514fca813582f01a3335e47e03a249f43f99f408d3240351a2b77860df92370761e56984783ab26a88f8e8e6ce4d486f88689a1c324024889fdf8ef03a08c50b32ba6f51f5b4389b3b9a8413f73fa5abe9abb718783a258c5275fb40f416bd2363f209718ca7e877f6d5d2a529f4996353f5cfd23a8d24767a256259634a12d4e111a53ac786326942c0a475466c6ed1b4c42b2ea9d4bf7cbe903d0b198503e80144b49bc565cb579abf9359a03a8e2f2dd8133eb4566ae6b1c5970244ae8d0a2fcf42a36fd22c7a87056188b56f88c40e5814acd6b8fd53d591081cc57af4f44c2217559b59b279c466b
+Decrypted Text (RSA): Confidential Data
+RSA Signature Verified Successfully!
+Execution Time: 882.269 ms
+
+=== AES-256-GCM Encryption/Decryption ===
+Ciphertext (AES): 65284b5640a513c3b8561b74e8a0991237
+Decrypted Text (AES): Confidential Data
+Execution Time: 54.408 ms
+
+=== Triple DES Encryption/Decryption ===
+Ciphertext (3DES): 4c731e6c1f645b77f8be7f4b31ad7a435d
+Decrypted Text (3DES): Confidential Data
+Execution Time: 54.736 ms
+
+=== RC4 Encryption/Decryption ===
+Ciphertext (RC4): ca9b11a0f83dcea42328825cd45ddd22be
+Decrypted Text (RC4): Confidential Data
+Execution Time: 27.532 ms
+
+=== Twofish Encryption/Decryption ===
+Ciphertext (Twofish): ebf23ce0965040e685734f06b130e9d0c9925d89f03b2a87fe1521659e7b87ab
+Decrypted Text (Twofish): Confidential Data
+Execution Time: 53.770 ms
+
+=== ECC Digital Signature ===
+Digital Signature (ECC): 75a047ad5913f079420b725f690fc9e4eab092a2199f56bcaa6ca2e14aea8fad396990a5e5e4d0f3f059e85d84a6e68948de0c49687dbcb3344ac22cd9ec883c
+ECC Signature Verified Successfully!
+Execution Time: 2.803 ms
+
+=== RSA-2048 Encryption/Decryption & Signature ===
+Encrypted Session Key (RSA): 055250cc0ff762a612f0b6b9263428467f28458853b25cafbae861e4f6a4d13956185da3065ad07ae7b18bcc2aadbe288072a2f6283b195d6875bb7d24218f471582978f1fc6e10b5451a5e1a10f28a135ffdfd8d6fb6dd2dd816acd6e276ed6f6dc7f36a6662043b2f3d8d4ad901cbdcf17cc9171357de886649d14c533452e5c39741e04f9b4f10e7cce10bdc561662d1a56be7e728b98c91905564fbf70bcf0bf212b567e39b71c8bdb2e394ec9d7af92f36ad922b1dbb21fb43a11135baf60c5fa375d8141ebc43add9fdfdaedfd2ce000833058ddf00115bd163bba09d3429f750de4676dcb836d298d2b510f713a2b2ad8400717c07454f93d84755102
+Ciphertext (Hybrid RSA-AES): e6e04c094bd60056feed4c24fbd96cd495
+Digital Signature (RSA): 493091b2fb1c3380c8383b1f7e17a81343f48406e3aef234f0312c27fd45e453ec36c09ee9bdc94a593985a1d81a48c005b527ce05bb5998d4c1058e698fe35714e737b730a5596133639d25943fb6985bd908b921466277f2b1338e58f58e42c732bc6f74d02d66f907a8da609cce2ee7f4b519469a90f90dc2db1e796692414d16f3cb4f9d05d40939668add79ab75dd32ffe472a571efbdeb100df5b7a84284f87bd95ab52990f62088a2f38cf1f8ee21a4e0be02918338fb54d1b597961898558f36ee28eca479007e3ecbb8d2d0300d6c7a889c9b14ce5f72030da402789e99745b63bc149ad4dabf1226ce7b521f8d31839078e055b321949a69641027
+Decrypted Text (RSA): Confidential Data
+RSA Signature Verified Successfully!
+Execution Time: 340.844 ms
+
+=== AES-256-GCM Encryption/Decryption ===
+Ciphertext (AES): 6a1f60c6c4ca445cb3d37d24a63ceb81b2
+Decrypted Text (AES): Confidential Data
+Execution Time: 53.935 ms
+
+=== Triple DES Encryption/Decryption ===
+Ciphertext (3DES): 204e6dd0370b01839479fcc6ca2bdc6108
+Decrypted Text (3DES): Confidential Data
+Execution Time: 54.802 ms
+
+=== RC4 Encryption/Decryption ===
+Ciphertext (RC4): 4a62ba62f7c70d94adb1f77d9115ba77c6
+Decrypted Text (RC4): Confidential Data
+Execution Time: 27.926 ms
+
+=== Twofish Encryption/Decryption ===
+Ciphertext (Twofish): 0fc5a752d1eb5b627580c1f1e4e96a242da5c63bb78031030ee6af92cba2045f
+Decrypted Text (Twofish): Confidential Data
+Execution Time: 53.841 ms
+
+=== ECC Digital Signature ===
+Digital Signature (ECC): 1c7b3415f651376f2f1135beb7dab35e0e577a45ee2dab62d42f932075cce1962f558810ca3538326f1c44d7a142ca19b872bc96f319df45b71db88a0a26f161
+ECC Signature Verified Successfully!
+Execution Time: 2.821 ms
+
+=== RSA-2048 Encryption/Decryption & Signature ===
+Encrypted Session Key (RSA): 0c918daf5830fd292f340b084d850f15a95f035b78ae2c17474076a4be8f6a5a418b4e4cce6402d655ee119cb4e31004c0684b2629e3793b12e75702f39eae99e4ac6fb037ce6c51eddeb09db1edd5a4bba2b2dbc3ef68f38a58904ba28305f395a8bee8876b847a7d682f331ffdf57719f1c2ed94c83ed4183d5e65a2957a90a5bf1f020ebc3e579e88f67a4ba97f14f556047c87d7acfcfdd171025be024e55cc80742038bbdf0e65a1091b062faf055534310018e8312f0424fa7ee9944d1344e515c7e07dc94cf2fe13402d966d4da1d62881e212bd937d3e8ce8dfce501f6052894f70dd428d6f81cfb3e60cfb5e8d7e7dd1cc618dfc5c73888bcec8a81
+Ciphertext (Hybrid RSA-AES): 736f4471c6a3511ac56c134794e8d4ce2e
+Digital Signature (RSA): b029909dae32f579f9e5ce1a9053833ced6ce29f2cedce3c9505904c3ba00d77ad8ca8743fec1e421b6ad6823522b33987e170ed5bb40d690ebc3bdfea804ac954bee4620cf8d4ca931d87c9987bb4fe73698d9449dbf449bc7be6052cb22ed9e47e79f466e57712b838e5b8bb9d27e573c173a93d039fb85f756d24c061edb37239ccf3974e8a26f3b3712346a2c6b5012d41b079639c67bd55e13e1ab4ab6bffac7cb86442c786196780d00c93b32d15129c486fb2b34da66cf406978eb0c64e0fcde7a506666ffe8beed08efecea0e6364f968254fcad79046d778584f71820d9619c0f4f804034042e5fb4a7a3bda1bdcf5343e1e465b5339a375f42dd73
+Decrypted Text (RSA): Confidential Data
+RSA Signature Verified Successfully!
+Execution Time: 2946.289 ms
+
+=== AES-256-GCM Encryption/Decryption ===
+Ciphertext (AES): 604cc52970ff76be0050eddb9512d87161
+Decrypted Text (AES): Confidential Data
+Execution Time: 56.708 ms
+
+=== Triple DES Encryption/Decryption ===
+Ciphertext (3DES): 34301fe77c57732ead31d6baad50f178ae
+Decrypted Text (3DES): Confidential Data
+Execution Time: 54.810 ms
+
+=== RC4 Encryption/Decryption ===
+Ciphertext (RC4): e1637c7918bca03b62bf969634e0a72302
+Decrypted Text (RC4): Confidential Data
+Execution Time: 27.522 ms
+
+=== Twofish Encryption/Decryption ===
+Ciphertext (Twofish): 55f2a20e24a6616f77428b751a188c497792c36742cd0b0e0c24e5163553e232
+Decrypted Text (Twofish): Confidential Data
+Execution Time: 54.015 ms
+
+=== ECC Digital Signature ===
+Digital Signature (ECC): 8e1ff53bd3272725f7d2e5fb2b50da36961e7be5aea0e88ba2795afe2a5ed839fdda38538e18371a3b40871fb7126fd1ff26dccfaaa47d9712ef9244f6c52e3a
+ECC Signature Verified Successfully!
+Execution Time: 2.825 ms
+
+=== RSA-2048 Encryption/Decryption & Signature ===
+Encrypted Session Key (RSA): 5042ceb32f6e42194b0d719b1e9a53c049a10a6cfc7e8426d3fc729bd48d9c946009c11bedf5f07db78d53356bfbf7a6b5d0410d009072e50a2e0cae324c08f0b5095f242fe98616a4a9a626fd07a3a90a0c3411cbc465ab7518095e5cdf4db70d8bc5bc32eee59b5068b45007ad38eaba164071fd7c42669dce581393c5c34b655bb869e071af2b06773752ac1658883c7f116cf8e190a156b74296c31501aebc2eedb805a3f4ac57a1311baf29c7ae2309c0cc3e60229565e4e72a078e5ca2e2dbc696c06dbcc3707a7b3e3abafdd7025323493e1b26c42d448c7f1190b71f76009dd7bff4e742be81b257881465eae73408d9ac8988f1bd532402e2dadf73
+Ciphertext (Hybrid RSA-AES): e984d05e7b4c58d3b66397039e7281dda9
+Digital Signature (RSA): aff2699745905239faec70c3520842172b5c678be8f69dcdef9443b731a3aca59e832407c4b05dfc1dc637aff666ed020a964338e2d486fd1f9cbc3d776057e0a8609c2758493ac4dc70dbcc9325b276a5d4a63c5bfd1a433784d28925d48cfa85eb4e79b29991588af5c931bf5533b0ed1f69a09c59b9b1c884a8987f90b789fdf13f8a3833788a41c284a2a6e1395492a2388c5b7349ac2da6cebca6a6fcbf4f0bd27009414f91e5c1ee7a1397cb3e4cdb018edb7fa4453a56b2b8044dfe998bbbfe7bf7891bbd2d5d2a502105d1fa5810ba4f0a8ec35418f821c3b5714f9d70de21d40f38303085f925bfce58b1d080e2b7dde8272799404bd00c849a7996
+Decrypted Text (RSA): Confidential Data
+RSA Signature Verified Successfully!
+Execution Time: 1459.771 ms
+
+============================================================
+BENCHMARK RESULTS
+============================================================
+
++-------------+-----------------+-----------------+----------------------------+
+| Algorithm   |   Avg Time (ms) | Size Overhead   | Security Level             |
++=============+=================+=================+============================+
+| ECC P-256   |           3.535 | +47 bytes       | High (256-bit)             |
++-------------+-----------------+-----------------+----------------------------+
+| RC4         |          27.751 | 0 bytes         | Low (Deprecated)           |
++-------------+-----------------+-----------------+----------------------------+
+| Twofish     |          54.119 | +15 bytes       | Very High (256-bit)        |
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
+| Twofish     |          54.119 | +15 bytes       | Very High (256-bit)        |
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
+| Twofish     |          54.119 | +15 bytes       | Very High (256-bit)        |
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
+| Twofish     |          54.119 | +15 bytes       | Very High (256-bit)        |
+| Twofish     |          54.119 | +15 bytes       | Very High (256-bit)        |
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
+| 3DES        |          55.03  | 0 bytes         | Medium (168-bit effective) |
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
+| AES-256-GCM |          55.512 | 0 bytes         | Very High (256-bit)        |
+| AES-256-GCM |          55.512 | 0 bytes         | Very High (256-bit)        |
++-------------+-----------------+-----------------+----------------------------+
++-------------+-----------------+-----------------+----------------------------+
+| RSA-2048    |        1372.73  | +256 bytes      | High (2048-bit)            |
++-------------+-----------------+-----------------+----------------------------+
+
+ANALYSIS:
+------------------------------------------------------------
+✓ Fastest Algorithm: ECC P-256
+✓ Slowest Algorithm: RSA-2048
+
+SECURITY RECOMMENDATIONS:
+------------------------------------------------------------
+• For general data encryption: AES-256-GCM
+• For key exchange: RSA-2048 or ECC P-256
+• For digital signatures: ECC P-256
+
+NOTES:
+------------------------------------------------------------
+• RC4 is considered cryptographically broken and should be avoided
+• 3DES is being phased out and should be replaced with AES
+• ECC provides similar security to RSA with smaller key sizes
