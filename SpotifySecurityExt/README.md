@@ -17,6 +17,13 @@ This is a simple personal project where I explore **AI-driven music recommendati
 - 🔍 **KNN Similarity Search** – Finds songs that match the user’s mood and listening history.  
 - 🌍 **Global Song Trends** – Integrates **Spotify's global top charts** for diverse recommendations.  
 - 🔗 **Spotify Integration** – View recommendations in the UI or **save them as a Spotify playlist**.  
+- 🔐 **Enhanced Security Features**:
+  - Added **Two-Factor Authentication (2FA)** for login.
+  - Implemented **rate limiting** to prevent brute-force attacks.
+  - Secured **password storage** with **bcrypt hashing**.
+  - Integrated **OAuth token security** and session management.
+- ⏳ **Session Timeout Handling** for auto-logout after inactivity.
+- 📜 **Access Logging** to monitor login attempts and API usage.
 
 
 ## **🛠️ Tech Stack**
@@ -25,6 +32,7 @@ This is a simple personal project where I explore **AI-driven music recommendati
 | **Frontend**    | Streamlit |
 | **Backend API** | FastAPI |
 | **Database** | PostgreSQL |
+| **Security** | Bcrypt, Flask-Limiter, Flask-Talisman |
 | **Spotify Data** | Spotipy API |
 | **Additional Song Data** | Last.fm API |
 | **ML Embeddings** | Latent Space Representation |
@@ -50,28 +58,14 @@ This is a simple personal project where I explore **AI-driven music recommendati
    - Playlists are **automatically saved** to the user's Spotify accounts.
    - **Previously created playlists** can be view and linked through History.
 
-
-## 💬 UI Showcase
-
-### Log in / Sign up 
-
-<img src="static/Login.png" alt="login" width="600">
-<img src="static/Signup.png" alt="signup" width="600">
-
-### Playlist Generator
-
-<img src="static/Generator.png" alt="generator" width="600">
-
-### Playlist History
-
-<img src="static/History.png" alt="history" width="600">
-
 ## **💡 Work Done & Future Improvements**
 ### **🛠️ Skills Used**
 - **Frontend Development** – Using **Streamlit** to create an interactive UI.  
 - **Backend Development** – Using **FastAPI** to handle API requests and data processing.  
 - **Machine Learning** – Implementing **vector embeddings and KNN** for recommendation systems.  
 - **Spotify API Integration** – Understanding **OAuth authentication, user data retrieval, and playlist management**.  
+- **Security Enhancements** – Implementing **2FA, rate limiting, and secure password storage**.
+
 
 ### **🔮 Next Steps**
 - **Improved NLP** – Improve latent representation of user's descriptive prompts.
@@ -91,6 +85,9 @@ cd spotify-extension
 ```bash
 pip install -r backend/requirements.txt
 pip install -r frontend/requirements.txt
+pip install Flask-Limiter
+pip install bcrypt
+pip install passlib
 ```
 
 ### **3️⃣ Set up Database**
@@ -101,7 +98,7 @@ pip install -r frontend/requirements.txt
 - Create a **Spotify Developer App** at https://developer.spotify.com/dashboard.
 - Obtain **Client ID & Secret**.  
 - Set up **redirect URI** for authentication.
-- Edit **.env** file with new client ID & Secret.
+- Edit **.env** file with new client ID & Secret and security keys.
 
 ### **5️⃣ Run the Application**
 - Run **backend.bat** & **frontend.bat**.
