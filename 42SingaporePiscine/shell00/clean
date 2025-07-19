@@ -1,0 +1,8 @@
+find . -type f \( -name \*\~ -o -name \#\*\# \) -print -delete
+
+# find all the files in this directory and subdirectory
+# \( to escape the symbols
+# *~ => matching with a name with everything before ~
+# -o => or
+# #*# => matching with name with everything beetween two #
+# print to show them , delete to ... delete them ;)

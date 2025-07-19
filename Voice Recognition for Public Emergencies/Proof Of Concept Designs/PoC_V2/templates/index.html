@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Detection System</title>
+    <script>
+        async function fetchIncidents() {
+            const response = await fetch("/api/incidents");
+            const data = await response.json();
+            const logContainer = document.getElementById("log");
+            logContainer.innerHTML = data.map(incident => `
+                <p><strong>${incident[1]}</strong> detected at ${incident[2]}</p>
+            `).join("");
+        }
+
+        setInterval(fetchIncidents, 3000); // Refresh every 3 seconds
+    </script>
+</head>
+<body>
+    <h1>Emergency Detection System</h1>
+    <div id="log">
+        <p>Loading incidents...</p>
+    </div>
+</body>
+</html>

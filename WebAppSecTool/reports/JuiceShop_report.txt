@@ -1,0 +1,7 @@
+Vulnerability Scan Report
+=========================
+{'url': 'https://juice-shop.herokuapp.com/#/', 'result': 'No vulnerabilities found'}
+{'url': 'https://juice-shop.herokuapp.com/#/', 'result': 'No vulnerabilities found'}
+{'url': 'https://juice-shop.herokuapp.com/#/', 'vulnerability': 'Weak Credentials Found', 'user': 'admin', 'password': 'admin'}
+{'url': 'https://juice-shop.herokuapp.com/#/', 'result': 'No API security issues found'}
+{'url': 'https://juice-shop.herokuapp.com/#/', 'vulnerability': 'Missing Security Headers', 'headers': ['Content-Security-Policy', 'Strict-Transport-Security']}

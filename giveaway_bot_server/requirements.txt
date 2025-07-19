@@ -1,0 +1,13 @@
+# Core Gleam Entry Automation
+selenium
+undetected-chromedriver
+
+# Parsing & Email Handling
+beautifulsoup4
+requests
+
+# For randomized email generation & other utilities (built-in but safe to include)
+faker
+
+# If you're planning to future-proof SMTP parsing (optional)
+aiosmtpd  # Only if you upgrade from smtpd to modern async
