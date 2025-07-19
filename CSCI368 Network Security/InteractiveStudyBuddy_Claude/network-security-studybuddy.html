@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Security HD Study Companion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .progress-tracker {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .study-phase {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            background: #f8f9ff;
+        }
+        
+        .study-phase h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .study-phase.completed {
+            border-left-color: #28a745;
+            background: #f0fff4;
+        }
+        
+        .study-phase.current {
+            border-left-color: #ffc107;
+            background: #fffdf0;
+            box-shadow: 0 2px 8px rgba(255,193,7,0.3);
+        }
+        
+        .tabs {
+            display: flex;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px 15px 0 0;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: #e9ecef;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-right: 1px solid #dee2e6;
+        }
+        
+        .tab:last-child {
+            border-right: none;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #667eea;
+            box-shadow: inset 0 -3px 0 #667eea;
+        }
+        
+        .tab-content {
+            background: white;
+            border-radius: 0 0 15px 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            min-height: 600px;
+        }
+        
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .concept-card {
+            background: #f8f9ff;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .concept-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .flashcard {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .flashcard:hover {
+            transform: scale(1.02);
+        }
+        
+        .flashcard.flipped {
+            background: #667eea;
+            color: white;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f8f9ff;
+        }
+        
+        .quiz-question {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 15px 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        
+        .quiz-options {
+            margin: 15px 0;
+        }
+        
+        .quiz-option {
+            display: block;
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: #f8f9ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quiz-option:hover {
+            background: #e9ecef;
+        }
+        
+        .quiz-option.selected {
+            background: #667eea;
+            color: white;
+        }
+        
+        .quiz-option.correct {
+            background: #28a745;
+            color: white;
+        }
+        
+        .quiz-option.incorrect {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .progress-bar {
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 8px;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Network Security HD Study Companion</h1>
+            <p>Your path to High Distinction mastery</p>
+        </div>
+
+        <div class="progress-tracker">
+            <h2>📅 Study Progress Timeline</h2>
+            <div id="timeline"></div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('concepts')">Core Concepts</button>
+            <button class="tab" onclick="showTab('flashcards')">Flashcards</button>
+            <button class="tab" onclick="showTab('comparisons')">Comparisons</button>
+            <button class="tab" onclick="showTab('quiz')">Practice Quiz</button>
+        </div>
+
+        <div class="tab-content">
+            <div id="concepts" class="tab-panel">
+                <h2>🎯 Core Concepts Mastery</h2>
+                <div class="concept-grid" id="conceptGrid"></div>
+            </div>
+
+            <div id="flashcards" class="tab-panel hidden">
+                <h2>🃏 Interactive Flashcards</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="flashcardProgress" style="width: 0%"></div>
+                </div>
+                <p>Click cards to reveal answers. Progress: <span id="progressText">0/0</span></p>
+                <div id="flashcardContainer"></div>
+                <button class="btn" onclick="shuffleFlashcards()">🔄 Shuffle Cards</button>
+                <button class="btn" onclick="resetFlashcards()">↻ Reset Progress</button>
+            </div>
+
+            <div id="comparisons" class="tab-panel hidden">
+                <h2>📊 Key Comparisons</h2>
+                <div id="comparisonContainer"></div>
+            </div>
+
+            <div id="quiz" class="tab-panel hidden">
+                <h2>🧠 Practice Quiz</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="quizProgress" style="width: 0%"></div>
+                </div>
+                <div id="quizContainer"></div>
+                <button class="btn" onclick="startQuiz()">🚀 Start New Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Study timeline data
+        const studyTimeline = [
+            { phase: "Deep Dive - Foundations", period: "Now - End of July", status: "current", topics: ["Network Basics", "Cryptography Basics", "CSCI368 Intro"] },
+            { phase: "Core Layers", period: "Aug 1-15", status: "upcoming", topics: ["Link-Layer", "Internet-Layer", "Transport-Layer"] },
+            { phase: "Applications & Tools", period: "Aug 16-25", status: "upcoming", topics: ["Application-Layer", "Network Security Tools", "PQC"] },
+            { phase: "Practice & Synthesis", period: "Aug 26 - Sep 1", status: "upcoming", topics: ["Question Banks", "End-to-end Scenarios"] },
+            { phase: "Final Review", period: "Sep 2-3", status: "upcoming", topics: ["Summary Notes", "Comparison Tables"] }
+        ];
+
+        // Core concepts data
+        const concepts = [
+            {
+                title: "OSI vs TCP/IP Models",
+                description: "Understand the purpose of each layer and how they interact",
+                details: "OSI has 7 layers (Physical, Data Link, Network, Transport, Session, Presentation, Application). TCP/IP has 4 layers (Network Interface, Internet, Transport, Application)."
+            },
+            {
+                title: "Symmetric vs Asymmetric Crypto",
+                description: "Foundation of all modern cryptographic systems",
+                details: "Symmetric: One shared key, fast encryption (AES, DES). Asymmetric: Public/private key pair, solves key distribution (RSA, ECC)."
+            },
+            {
+                title: "Hash Functions & MACs",
+                description: "Integrity and authenticity mechanisms",
+                details: "Hash provides integrity only. MAC (like HMAC) provides integrity AND authenticity using a shared secret."
+            },
+            {
+                title: "IPsec: AH vs ESP",
+                description: "Two main protocols for IP-layer security",
+                details: "AH: Provides integrity/authenticity for entire packet, no encryption. ESP: Provides confidentiality and optional integrity for payload."
+            },
+            {
+                title: "TLS Handshake Protocol",
+                description: "How secure connections are established",
+                details: "ClientHello → ServerHello → Certificate → Key Exchange → ChangeCipherSpec → Finished"
+            },
+            {
+                title: "Wireless Security Evolution",
+                description: "WEP → WPA → WPA2 → WPA3 progression",
+                details: "WEP: Broken (short IVs). WPA: TKIP fix. WPA2: AES standard. WPA3: Forward secrecy protection."
+            }
+        ];
+
+        // Flashcard data - ADD YOUR OWN QUESTIONS HERE
+        const flashcards = [
+            { question: "What are the three types of network addresses?", answer: "Physical (MAC), Logical (IP), and Port addresses" },
+            { question: "What is the main advantage of asymmetric cryptography?", answer: "Solves the key distribution problem - no need to share secret keys in advance" },
+            { question: "What is forward secrecy in WPA3?", answer: "Even if password is compromised, past traffic cannot be decrypted" },
+            { question: "What are the two modes of IPsec operation?", answer: "Transport mode (host-to-host) and Tunnel mode (gateway-to-gateway/VPN)" },
+            { question: "What is the difference between IDS and IPS?", answer: "IDS detects and alerts on threats. IPS actively prevents/blocks threats." },
+            { question: "What problem does QUIC solve with TCP?", answer: "Head-of-line blocking by using independent streams within a single connection" },
+            { question: "What are Shor's and Grover's algorithms?", answer: "Shor's breaks public-key crypto. Grover's weakens symmetric crypto (requires doubling key sizes)" },
+            { question: "What is the Web of Trust vs Hierarchical trust?", answer: "PGP uses decentralized Web of Trust. S/MIME uses centralized CA hierarchy like TLS" },
+            
+            // CRYPTOGRAPHY BASICS - Add more here
+            { question: "What is a MAC and how does it differ from a hash?", answer: "MAC provides integrity AND authenticity using a shared secret key. Hash only provides integrity." },
+            { question: "What are the three properties of digital signatures?", answer: "Integrity, Authenticity, and Non-repudiation" },
+            { question: "What is the difference between pre-image and collision resistance?", answer: "Pre-image: hard to find input from hash. Collision: hard to find two inputs with same hash" },
+            { question: "What is a hybrid cryptosystem?", answer: "Uses asymmetric crypto to exchange symmetric keys, then symmetric crypto for data encryption" },
+            
+            // NETWORK LAYERS - Add more here
+            { question: "What layers does the TCP/IP model have?", answer: "Network Interface, Internet, Transport, Application (4 layers)" },
+            { question: "What is the purpose of the Network Layer?", answer: "Logical addressing and routing between different networks" },
+            { question: "What vulnerability does ARP Poisoning exploit?", answer: "ARP doesn't authenticate - attacker can claim any IP-MAC mapping" },
+            
+            // IPSEC - Add more here
+            { question: "What does IKE Phase 1 accomplish?", answer: "Creates a secure channel between peers for negotiating SAs" },
+            { question: "What does IKE Phase 2 accomplish?", answer: "Negotiates actual IPsec SAs for user data, using the secure channel from Phase 1" },
+            { question: "What is the trade-off between Main Mode and Aggressive Mode?", answer: "Main Mode: 6 messages, protects identity. Aggressive Mode: 3 messages, faster but exposes identity" },
+            
+            // TLS/SSL - Add more here
+            { question: "What are the two main TLS protocols?", answer: "Handshake Protocol (establishes connection) and Record Protocol (encrypts data)" },
+            { question: "What is the purpose of ChangeCipherSpec in TLS?", answer: "Signals that subsequent messages will use the negotiated encryption" },
+            { question: "How does DTLS handle packet loss?", answer: "Adds retransmission timers and HelloVerifyRequest with cookies to prevent DoS" },
+            
+            // WIRELESS SECURITY - Add more here
+            { question: "Why was WEP fundamentally broken?", answer: "Short IVs (24-bit), static key reuse, weak integrity check (CRC-32)" },
+            { question: "What does 802.1X provide for enterprise wireless?", answer: "Port-based network access control with centralized authentication" },
+            { question: "What are the three components of 802.1X?", answer: "Supplicant (client), Authenticator (AP), Authentication Server (RADIUS)" },
+            
+            // KERBEROS - Add more here
+            { question: "What is the purpose of a TGT in Kerberos?", answer: "Allows user to get service tickets without re-entering password" },
+            { question: "What is the difference between a Ticket and Authenticator?", answer: "Ticket: for server to decrypt. Authenticator: proves client's identity with timestamp" },
+            { question: "What are the three 'heads' of Kerberos?", answer: "Client, Authentication Server (AS), Ticket-Granting Server (TGS)" },
+            
+            // POST-QUANTUM CRYPTO - Add more here
+            { question: "What is a 'store now, decrypt later' attack?", answer: "Adversary records encrypted data today to decrypt when quantum computers exist" },
+            { question: "What are NIST's standardized PQC algorithms?", answer: "CRYSTALS-Kyber (key exchange) and CRYSTALS-Dilithium (signatures)" },
+            { question: "What mathematical problems do PQC algorithms rely on?", answer: "Lattices, codes, and other problems believed quantum-resistant" }
+        ];
+
+        // Comparison data
+        const comparisons = [
+            {
+                title: "IPsec AH vs ESP",
+                headers: ["Feature", "Authentication Header (AH)", "Encapsulating Security Payload (ESP)"],
+                rows: [
+                    ["Confidentiality", "No (Plaintext data)", "Yes (Encrypts payload)"],
+                    ["Integrity", "Yes", "Yes (Optional but standard)"],
+                    ["Scope", "Entire packet including IP header", "ESP header, payload, and trailer only"],
+                    ["Use Case", "When confidentiality not needed", "Standard choice for VPNs"]
+                ]
+            },
+            {
+                title: "Wireless Security Evolution",
+                headers: ["Standard", "Encryption", "Key Management", "Security Level"],
+                rows: [
+                    ["WEP", "RC4 with short IVs", "Static shared key", "Broken"],
+                    ["WPA", "TKIP", "Dynamic keys", "Interim fix"],
+                    ["WPA2", "AES-CCMP", "Strong key derivation", "Secure for years"],
+                    ["WPA3", "AES + Forward Secrecy", "Enhanced protection", "Current standard"]
+                ]
+            }
+        ];
+
+        // Quiz data - ADD YOUR OWN QUESTIONS HERE
+        const quizQuestions = [
+            {
+                question: "Which cryptographic primitive provides integrity, authenticity, AND non-repudiation?",
+                options: ["Hash function", "MAC", "Digital signature", "Symmetric encryption"],
+                correct: 2,
+                explanation: "Digital signatures use private key to sign and public key to verify, providing all three properties."
+            },
+            {
+                question: "What is the main difference between Main Mode and Aggressive Mode in IKE Phase 1?",
+                options: ["Number of messages", "Encryption strength", "Key exchange method", "Authentication type"],
+                correct: 0,
+                explanation: "Main Mode uses 6 messages and protects identity. Aggressive Mode uses 3 messages but exposes identity."
+            },
+            {
+                question: "What does DTLS solve compared to TLS?",
+                options: ["Faster encryption", "Better authentication", "UDP packet loss handling", "Lower latency"],
+                correct: 2,
+                explanation: "DTLS adapts TLS for UDP by handling packet loss and adding HelloVerifyRequest to prevent DoS."
+            },
+            
+            // CRYPTOGRAPHY QUESTIONS - Add more here
+            {
+                question: "What is the primary advantage of hybrid cryptosystems?",
+                options: ["Stronger encryption", "Combines speed of symmetric with convenience of asymmetric", "Smaller key sizes", "Better authentication"],
+                correct: 1,
+                explanation: "Hybrid systems use fast symmetric encryption for data and asymmetric encryption just for key exchange."
+            },
+            {
+                question: "Which property makes hash functions suitable for password storage?",
+                options: ["Reversibility", "Pre-image resistance", "Key exchange", "Speed"],
+                correct: 1,
+                explanation: "Pre-image resistance means it's computationally hard to find the original password from its hash."
+            },
+            
+            // NETWORK LAYER QUESTIONS - Add more here
+            {
+                question: "What makes IP spoofing possible?",
+                options: ["Weak encryption", "No authentication of source IP", "Short packet headers", "UDP protocol"],
+                correct: 1,
+                explanation: "IP headers don't authenticate the source address, allowing attackers to forge source IPs."
+            },
+            {
+                question: "What is the main purpose of a DMZ?",
+                options: ["Encrypt traffic", "Buffer zone between internal network and internet", "Store passwords", "Monitor traffic"],
+                correct: 1,
+                explanation: "DMZ creates a buffer network for publicly accessible services like web servers."
+            },
+            
+            // IPSEC QUESTIONS - Add more here
+            {
+                question: "In IPsec Transport Mode with ESP, what is encrypted?",
+                options: ["Entire IP packet", "IP header only", "Payload only", "ESP header only"],
+                correct: 2,
+                explanation: "Transport mode with ESP encrypts only the payload, leaving IP header in plaintext for routing."
+            },
+            {
+                question: "What advantage does IPsec Tunnel Mode provide over Transport Mode?",
+                options: ["Faster encryption", "Hides original source/destination", "Better authentication", "Smaller overhead"],
+                correct: 1,
+                explanation: "Tunnel mode encapsulates entire IP packet in new one, hiding original endpoints - ideal for VPNs."
+            },
+            
+            // TLS QUESTIONS - Add more here
+            {
+                question: "What happens during the TLS Record Protocol phase?",
+                options: ["Certificate exchange", "Cipher negotiation", "Actual data encryption", "Key generation"],
+                correct: 2,
+                explanation: "Record Protocol handles encryption and authentication of application data after handshake completes."
+            },
+            {
+                question: "Why does QUIC use UDP instead of TCP?",
+                options: ["Faster encryption", "Better security", "Avoids head-of-line blocking", "Smaller packets"],
+                correct: 2,
+                explanation: "UDP allows QUIC to implement independent streams, avoiding TCP's head-of-line blocking problem."
+            },
+            
+            // WIRELESS SECURITY QUESTIONS - Add more here
+            {
+                question: "What was the main weakness of WEP's IV (Initialization Vector)?",
+                options: ["Too long", "Not encrypted", "Only 24 bits - led to reuse", "Missing entirely"],
+                correct: 2,
+                explanation: "24-bit IVs meant frequent reuse, allowing cryptographic attacks to recover the key."
+            },
+            {
+                question: "What does WPA3's 'forward secrecy' protect against?",
+                options: ["Brute force attacks", "Past traffic decryption if password compromised", "Man-in-the-middle attacks", "Denial of service"],
+                correct: 1,
+                explanation: "Even if someone gets your password later, they can't decrypt your previous communications."
+            },
+            
+            // APPLICATION SECURITY QUESTIONS - Add more here
+            {
+                question: "What is the key difference between PGP and S/MIME trust models?",
+                options: ["Encryption strength", "PGP uses Web of Trust, S/MIME uses CA hierarchy", "Protocol version", "Key sizes"],
+                correct: 1,
+                explanation: "PGP uses decentralized web of trust. S/MIME uses centralized Certificate Authority hierarchy."
+            },
+            {
+                question: "In Kerberos, what allows a user to avoid re-entering their password for multiple services?",
+                options: ["Session key", "Ticket-Granting Ticket (TGT)", "Authenticator", "Service ticket"],
+                correct: 1,
+                explanation: "TGT acts as temporary credential to get service tickets without password re-entry."
+            },
+            
+            // POST-QUANTUM CRYPTO QUESTIONS - Add more here
+            {
+                question: "Why is Post-Quantum Cryptography urgent even before quantum computers exist?",
+                options: ["Current crypto is too slow", "'Store now, decrypt later' attacks", "Better security", "Regulatory requirements"],
+                correct: 1,
+                explanation: "Adversaries can record encrypted data today and decrypt it once quantum computers become available."
+            },
+            {
+                question: "How does Grover's algorithm affect symmetric cryptography?",
+                options: ["Breaks it completely", "Has no effect", "Effectively halves key strength", "Makes it faster"],
+                correct: 2,
+                explanation: "Grover's algorithm provides quadratic speedup, so 256-bit keys become as secure as 128-bit keys."
+            }
+        ];
+
+        let currentFlashcard = 0;
+        let flashcardProgress = 0;
+        let currentQuizQuestion = 0;
+        let quizScore = 0;
+        let quizStarted = false;
+
+        // Initialize the app
+        function init() {
+            renderTimeline();
+            renderConcepts();
+            renderFlashcards();
+            renderComparisons();
+        }
+
+        function renderTimeline() {
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = studyTimeline.map(phase => `
+                <div class="study-phase ${phase.status}">
+                    <h3>${phase.phase}</h3>
+                    <p><strong>${phase.period}</strong></p>
+                    <p>Topics: ${phase.topics.join(', ')}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderConcepts() {
+            const grid = document.getElementById('conceptGrid');
+            grid.innerHTML = concepts.map((concept, index) => `
+                <div class="concept-card fade-in" style="animation-delay: ${index * 0.1}s">
+                    <h4>${concept.title}</h4>
+                    <p><em>${concept.description}</em></p>
+                    <p>${concept.details}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderFlashcards() {
+            const container = document.getElementById('flashcardContainer');
+            container.innerHTML = flashcards.map((card, index) => `
+                <div class="flashcard" id="flashcard-${index}" onclick="flipFlashcard(${index})">
+                    <h4>Question ${index + 1}</h4>
+                    <p id="flashcard-text-${index}">${card.question}</p>
+                </div>
+            `).join('');
+            updateFlashcardProgress();
+        }
+
+        function flipFlashcard(index) {
+            const card = document.getElementById(`flashcard-${index}`);
+            const text = document.getElementById(`flashcard-text-${index}`);
+            
+            if (!card.classList.contains('flipped')) {
+                card.classList.add('flipped');
+                text.textContent = flashcards[index].answer;
+                flashcardProgress++;
+                updateFlashcardProgress();
+            } else {
+                card.classList.remove('flipped');
+                text.textContent = flashcards[index].question;
+            }
+        }
+
+        function updateFlashcardProgress() {
+            const progress = (flashcardProgress / flashcards.length) * 100;
+            document.getElementById('flashcardProgress').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${flashcardProgress}/${flashcards.length}`;
+        }
+
+        function shuffleFlashcards() {
+            // Fisher-Yates shuffle
+            for (let i = flashcards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+            }
+            renderFlashcards();
+            flashcardProgress = 0;
+        }
+
+        function resetFlashcards() {
+            flashcardProgress = 0;
+            document.querySelectorAll('.flashcard').forEach(card => {
+                card.classList.remove('flipped');
+            });
+            flashcards.forEach((card, index) => {
+                document.getElementById(`flashcard-text-${index}`).textContent = card.question;
+            });
+            updateFlashcardProgress();
+        }
+
+        function renderComparisons() {
+            const container = document.getElementById('comparisonContainer');
+            container.innerHTML = comparisons.map(comp => `
+                <div style="margin-bottom: 30px;">
+                    <h3>${comp.title}</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>${comp.headers.map(h => `<th>${h}</th>`).join('')}</tr>
+                        </thead>
+                        <tbody>
+                            ${comp.rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `).join('');
+        }
+
+        function startQuiz() {
+            currentQuizQuestion = 0;
+            quizScore = 0;
+            quizStarted = true;
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const container = document.getElementById('quizContainer');
+            if (currentQuizQuestion >= quizQuestions.length) {
+                container.innerHTML = `
+                    <div class="quiz-question">
+                        <h3>🎉 Quiz Complete!</h3>
+                        <p>Your score: ${quizScore}/${quizQuestions.length} (${Math.round((quizScore/quizQuestions.length)*100)}%)</p>
+                        <p>${quizScore === quizQuestions.length ? 'Perfect! You\'re ready for that HD!' : 'Good effort! Review the concepts you missed.'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const question = quizQuestions[currentQuizQuestion];
+            container.innerHTML = `
+                <div class="quiz-question">
+                    <h3>Question ${currentQuizQuestion + 1} of ${quizQuestions.length}</h3>
+                    <p><strong>${question.question}</strong></p>
+                    <div class="quiz-options">
+                        ${question.options.map((option, index) => `
+                            <label class="quiz-option" onclick="selectQuizOption(${index})">
+                                <input type="radio" name="quiz-answer" value="${index}" style="margin-right: 10px;">
+                                ${option}
+                            </label>
+                        `).join('')}
+                    </div>
+                    <button class="btn" onclick="submitQuizAnswer()" id="submitBtn" disabled>Submit Answer</button>
+                    <div id="explanation" class="hidden" style="margin-top: 15px; padding: 15px; background: #f8f9ff; border-radius: 8px;"></div>
+                </div>
+            `;
+            
+            const progress = ((currentQuizQuestion) / quizQuestions.length) * 100;
+            document.getElementById('quizProgress').style.width = `${progress}%`;
+        }
+
+        function selectQuizOption(index) {
+            document.querySelectorAll('.quiz-option').forEach((option, i) => {
+                option.classList.toggle('selected', i === index);
+            });
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function submitQuizAnswer() {
+            const selected = document.querySelector('.quiz-option.selected');
+            if (!selected) return;
+
+            const selectedIndex = Array.from(document.querySelectorAll('.quiz-option')).indexOf(selected);
+            const question = quizQuestions[currentQuizQuestion];
+            const isCorrect = selectedIndex === question.correct;
+
+            document.querySelectorAll('.quiz-option').forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && !isCorrect) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            if (isCorrect) quizScore++;
+
+            document.getElementById('explanation').innerHTML = `
+                <p><strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect'}</strong></p>
+                <p>${question.explanation}</p>
+            `;
+            document.getElementById('explanation').classList.remove('hidden');
+
+            setTimeout(() => {
+                currentQuizQuestion++;
+                renderQuizQuestion();
+            }, 3000);
+        }
+
+        function showTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/hide tab panels
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+            document.getElementById(tabName).classList.remove('hidden');
+        }
+
+        // Initialize when page loads
+        window.onload = init;
+    </script>
+</body>
+</html>
