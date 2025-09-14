@@ -1,4 +1,6 @@
 import time
+import hmac
+import uuid as _uuid
 import logging
 from .logging_config import setup_logging, new_request_id, client_ip, request_id_var
 from .models import AuditEvent, User, VaultItem   # + AuditEvent
@@ -45,34 +47,57 @@ if Path("app/static").exists():
 
 Base.metadata.create_all(bind=engine)
 
-def write_audit(db: Session, request: Request, action: str, success: bool, detail: str = "",
-                target_type: str | None = None, target_id: str | None = None, user: User | None = None):
+
+
+
+def current_user(request: Request, db: Session) -> User | None:
+    """Return logged-in user only when FULLY authenticated (i.e., after 2FA)."""
+    sess = get_session(request)
+    if not sess or "uid" not in sess:
+        return None
+    return db.get(User, sess["uid"])
+
+def _to_uuid_or_none(val):
+    if val is None or isinstance(val, _uuid.UUID):
+        return val
+    try:
+        return _uuid.UUID(str(val))
+    except Exception:
+        return None
+
+def write_audit(
+    db: Session,
+    request: Request,
+    action: str,
+    success: bool,
+    detail: str = "",
+    target_type: str | None = None,
+    target_id: str | _uuid.UUID | None = None,
+    user: User | None = None,
+):
     try:
         uid = user.id if user else (current_user(request, db).id if current_user(request, db) else None)
     except Exception:
         uid = None
-    event = AuditEvent(
-        user_id=uid,
-        ip=request.headers.get("x-forwarded-for", request.client.host if request.client else None),
-        ua=request.headers.get("user-agent"),
-        action=action,
-        target_type=target_type,
-        target_id=str(target_id) if target_id is not None else None,
-        success=success,
-        detail=detail[:2000] if detail else None,
-    )
-    db.add(event); db.commit()
-    # file log
-    alog.info({
-        "action": action,
-        "success": success,
-        "user_id": uid,
-        "target_type": target_type,
-        "target_id": target_id,
-        "ip": event.ip,
-        "ua": event.ua,
-        "detail": detail,
-    })
+    try:
+        event = AuditEvent(
+            user_id=uid,
+            ip=request.headers.get("x-forwarded-for", request.client.host if request.client else None),
+            ua=request.headers.get("user-agent"),
+            action=action,
+            target_type=target_type,
+            target_id=_to_uuid_or_none(target_id),
+            success=success,
+            detail=(detail[:2000] if detail else None),
+        )
+        db.add(event)
+        db.commit()
+    except Exception as e:
+        # Never break the request because auditing failed.
+        alog.exception({"audit_write_failed": True, "action": action, "err": str(e)})
+
+
+
 @app.middleware("http")
 async def access_logger(request: Request, call_next):
     rid = new_request_id()
@@ -97,21 +122,6 @@ async def access_logger(request: Request, call_next):
             "user_agent": request.headers.get("user-agent", ""),
         })
     return response
-
-
-def current_user(request: Request, db: Session) -> User | None:
-    """Return logged-in user only when FULLY authenticated (i.e., after 2FA)."""
-    sess = get_session(request)
-    if not sess or "uid" not in sess:
-        return None
-    return db.get(User, sess["uid"])
-
-
-@app.middleware("http")
-async def add_security_headers(request, call_next):
-    resp = await call_next(request)
-    return csp_headers(resp)
-
 
 def _assert_csrf(request: Request, csrf_token: str):
     if not csrf_token or request.session.get("csrf") != csrf_token:
@@ -252,24 +262,66 @@ def verify_2fa_page(request: Request):
 
 
 @app.post("/verify-2fa")
-def verify_2fa(request: Request, token: str = Form(...), csrf_token: str = Form(...), db: Session = Depends(get_db)):
+def verify_2fa(
+    request: Request,
+    token: str = Form(...),
+    csrf_token: str = Form(...),
+    db: Session = Depends(get_db),
+):
     _assert_csrf(request, csrf_token)
-    sess = get_session(request); uid = (sess or {}).get("pre_uid")
-    if not uid: return RedirectResponse(url="/", status_code=302)
+
+    sess = get_session(request)
+    uid = (sess or {}).get("pre_uid")
+    if not uid:
+        return RedirectResponse(url="/", status_code=302)
+
     user = db.get(User, uid)
     if not user or not user.totp_enabled or not user.totp_secret:
         return RedirectResponse(url="/", status_code=302)
 
     totp = pyotp.TOTP(user.totp_secret.decode())
-    if not totp.verify(token, valid_window=1):     # tolerate ±1 step
+
+    # Compute the current 30s counter and block replays or “past” codes.
+    now_counter = int(time.time()) // 30  # 30s step for TOTP
+    if user.last_totp_counter is not None and now_counter <= user.last_totp_counter:
+        # Same/older time-slice → reject outright
         csrf = generate_csrf(); request.session["csrf"] = csrf
-        return templates.TemplateResponse("verify_2fa.html",
+        try:
+            write_audit(db, request, "verify_2fa", False, detail="counter_reuse")
+        except Exception:
+            pass
+        return templates.TemplateResponse(
+            "verify_2fa.html",
             {"request": request, "csrf": csrf, "message": "Invalid code."},
-            status_code=400)
+            status_code=400,
+        )
+
+    # Verify exactly the current time-slice (no ±1).
+    if not totp.verify(token, valid_window=0):
+        csrf = generate_csrf(); request.session["csrf"] = csrf
+        try:
+            write_audit(db, request, "verify_2fa", False, detail="bad_token")
+        except Exception:
+            pass
+        return templates.TemplateResponse(
+            "verify_2fa.html",
+            {"request": request, "csrf": csrf, "message": "Invalid code."},
+            status_code=400,
+        )
+
+    # Mark this time-slice as used, commit, then promote the session.
+    user.last_totp_counter = now_counter
+    db.commit()
+
+    try:
+        write_audit(db, request, "verify_2fa", True)
+    except Exception:
+        pass
 
     resp = RedirectResponse(url="/vault", status_code=302)
-    set_session(resp, {"uid": str(user.id), "tfa": True})   # rotate session to fully authed
+    set_session(resp, {"uid": str(user.id), "tfa": True})  # rotate to fully-authed
     return resp
+
 
 
 
