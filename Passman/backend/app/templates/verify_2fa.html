@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>2FA Verification</h2>
+{% if message %}<p class="muted" style="color:#fca5a5">{{ message }}</p>{% endif %}
 <form method="post" action="/verify-2fa">
+  <input type="hidden" name="csrf_token" value="{{ csrf }}">
   <label>Enter 6-digit code</label>
-  <input name="token" required />
+  <input name="token" required inputmode="numeric" autocomplete="one-time-code" />
   <button type="submit">Verify</button>
 </form>
 {% endblock %}

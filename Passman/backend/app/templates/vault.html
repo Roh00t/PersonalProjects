@@ -2,32 +2,52 @@
 {% block content %}
 <div style="display:flex; justify-content:space-between; align-items:center;">
   <h2>Vault</h2>
-  <div><span class="muted">Signed in as {{ username }}</span> · <a href="/logout">Logout</a></div>
+  <div>
+  <span class="muted">Signed in as {{ username }}</span>
+  {% if not tfa_enabled %} · <a href="/setup-2fa">Enable 2FA</a>{% endif %}
+  · <a href="/logout">Logout</a>
 </div>
 
-<form method="post" action="/vault/add">
+</div>
+
+<!-- CSRF value for JS (no inline scripts) -->
+<input type="hidden" id="csrf" value="{{ csrf }}">
+
+<form method="post" action="/vault/add" autocomplete="off" spellcheck="false" novalidate>
+  <input type="hidden" name="csrf_token" value="{{ csrf }}">
   <label>Title</label>
   <input name="title" required />
   <label>URL</label>
-  <input name="url" />
+  <input name="url" autocomplete="off" />
   <label>Username</label>
-  <input name="vusername" />
+  <input name="vusername" autocomplete="off" />
   <label>Password / Secret</label>
-  <input name="secret" required />
+  <input name="secret" type="password" required autocomplete="new-password" />
   <button type="submit">Save</button>
 </form>
 
 <table>
-  <thead><tr><th>Title</th><th>URL</th><th>Username</th><th>Secret</th><th class="right">Actions</th></tr></thead>
+  <thead>
+    <tr><th>Title</th><th>URL</th><th>Username</th><th>Secret</th><th class="right">Actions</th></tr>
+  </thead>
   <tbody>
     {% for i in items %}
-      <tr>
+      <tr data-id="{{ i.id }}">
         <td>{{ i.title }}</td>
-        <td><a href="{{ i.url }}" target="_blank" rel="noopener">{{ i.url }}</a></td>
+        <td>
+          {% if i.url %}
+            <a href="{{ i.url }}" target="_blank" rel="noopener noreferrer">{{ i.url }}</a>
+          {% endif %}
+        </td>
         <td>{{ i.username }}</td>
-        <td>{{ i.secret }}</td>
+        <td>
+          <span class="muted secret" data-loaded="false">••••••••</span>
+          <button type="button" class="reveal">Reveal</button>
+          <button type="button" class="copy">Copy</button>
+        </td>
         <td class="right">
           <form method="post" action="/vault/delete" style="display:inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf }}">
             <input type="hidden" name="item_id" value="{{ i.id }}"/>
             <button type="submit">Delete</button>
           </form>
@@ -36,4 +56,7 @@
     {% endfor %}
   </tbody>
 </table>
+
+<!-- No inline JS; serve from /static to satisfy CSP (script-src 'self') -->
+<script src="/static/vault.js" defer></script>
 {% endblock %}

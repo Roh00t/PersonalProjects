@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Setup 2FA</h2>
-<p>Secret (add to Google Authenticator / Authy):</p>
-<pre>{{ secret }}</pre>
-<p class="muted">Or scan this otpauth URL with compatible apps:</p>
-<pre>{{ otpauth }}</pre>
+{% if message %}<p class="muted" style="color:#fca5a5">{{ message }}</p>{% endif %}
+
+<p>Scan this QR in Google Authenticator / Authy:</p>
+<p><img src="{{ qr }}" alt="TOTP QR" width="180" height="180"></p>
+
+<p class="muted" style="word-break:break-all;">otpauth: {{ otpauth }}</p>
+<p class="muted" style="word-break:break-all;">Secret: <strong>{{ secret }}</strong></p>
+
 <form method="post" action="/enable-2fa">
-  <label>Username</label>
-  <input name="username" required />
-  <input type="hidden" name="secret" value="{{ secret }}"/>
+  <input type="hidden" name="csrf_token" value="{{ csrf }}">
   <label>Enter 6-digit code from your app</label>
-  <input name="token" required />
+  <input name="token" required inputmode="numeric" autocomplete="one-time-code" />
   <button type="submit">Enable 2FA</button>
 </form>
 {% endblock %}

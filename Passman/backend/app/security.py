@@ -42,9 +42,11 @@ def generate_csrf() -> str:
     return base64.urlsafe_b64encode(secrets.token_bytes(24)).decode()
 
 def csp_headers(resp: Response):
-    # Basic CSP; adjust for production
     resp.headers["Content-Security-Policy"] = "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'"
     resp.headers["X-Content-Type-Options"] = "nosniff"
     resp.headers["X-Frame-Options"] = "DENY"
     resp.headers["Referrer-Policy"] = "no-referrer"
+    resp.headers["Cache-Control"] = "no-store"        # <- add
+    resp.headers["Pragma"] = "no-cache"               # <- add
     return resp
+
