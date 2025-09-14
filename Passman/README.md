@@ -1,8 +1,9 @@
 # PassManager
 A secure, self-hosted password manager with web UI, TOTP 2FA, and comprehensive audit logging. Built with FastAPI, PostgreSQL, and Docker Compose for easy deployment.
 
-## Website
-
+## Credits and Inspiration
+Maintainer: [@Roh00t](https://github.com/Roh00t)
+Inspiration: [@cyrolite](https://github.com/cyrolite/cyrolite)
 
 ## ✨ Features
 
