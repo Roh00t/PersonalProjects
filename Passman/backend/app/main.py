@@ -1,3 +1,13 @@
+import time
+import logging
+from .logging_config import setup_logging, new_request_id, client_ip, request_id_var
+from .models import AuditEvent, User, VaultItem   # + AuditEvent
+
+setup_logging()
+log = logging.getLogger("passman")
+alog = logging.getLogger("audit")
+xlog = logging.getLogger("access")
+
 import os, qrcode, base64, secrets, io
 from pathlib import Path
 from fastapi import FastAPI, Depends, Request, Form, HTTPException
@@ -34,6 +44,59 @@ if Path("app/static").exists():
     app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 Base.metadata.create_all(bind=engine)
+
+def write_audit(db: Session, request: Request, action: str, success: bool, detail: str = "",
+                target_type: str | None = None, target_id: str | None = None, user: User | None = None):
+    try:
+        uid = user.id if user else (current_user(request, db).id if current_user(request, db) else None)
+    except Exception:
+        uid = None
+    event = AuditEvent(
+        user_id=uid,
+        ip=request.headers.get("x-forwarded-for", request.client.host if request.client else None),
+        ua=request.headers.get("user-agent"),
+        action=action,
+        target_type=target_type,
+        target_id=str(target_id) if target_id is not None else None,
+        success=success,
+        detail=detail[:2000] if detail else None,
+    )
+    db.add(event); db.commit()
+    # file log
+    alog.info({
+        "action": action,
+        "success": success,
+        "user_id": uid,
+        "target_type": target_type,
+        "target_id": target_id,
+        "ip": event.ip,
+        "ua": event.ua,
+        "detail": detail,
+    })
+@app.middleware("http")
+async def access_logger(request: Request, call_next):
+    rid = new_request_id()
+    start = time.time()
+    # make sure your existing CSP/security headers middleware stays; call_next only once.
+    try:
+        response = await call_next(request)
+        status = response.status_code
+    except Exception as e:
+        status = 500
+        log.exception("Unhandled exception")
+        raise
+    finally:
+        dur_ms = int((time.time() - start) * 1000)
+        xlog.info({
+            "rid": rid,
+            "method": request.method,
+            "path": request.url.path,
+            "status": status,
+            "duration_ms": dur_ms,
+            "ip": client_ip(request.scope.get("headers", [])),
+            "user_agent": request.headers.get("user-agent", ""),
+        })
+    return response
 
 
 def current_user(request: Request, db: Session) -> User | None:
