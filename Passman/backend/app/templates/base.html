@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PassManager</title>
+    <style>
+      body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; background:#0b0f1a; color:#e6f0ff; }
+      .card { background:rgba(0,0,0,0.5); padding:24px; border-radius:16px; max-width:720px; margin:60px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.35); }
+      input, select { width:100%; padding:12px; margin:8px 0 16px; border-radius:10px; border:1px solid #2a3850; background:#0f172a; color:#e6f0ff; }
+      button { width:100%; padding:12px; border:none; border-radius:10px; background:#2563eb; color:white; font-weight:600; cursor:pointer; }
+      button:hover { filter:brightness(1.1); }
+      a { color:#60a5fa; text-decoration:none; }
+      header { font-size:42px; font-weight:800; letter-spacing:0.5px; text-align:center; margin-top:40px;}
+      .muted { color:#94a3b8; font-size:14px; }
+      table { width:100%; border-collapse:collapse; margin-top:10px;}
+      th, td { text-align:left; padding:8px 10px; border-bottom:1px solid #1e293b; }
+      .right { text-align:right;}
+    </style>
+  </head>
+  <body>
+    <header>PassManager</header>
+    <div class="card">
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>

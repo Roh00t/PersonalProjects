@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+venv/
+*.sqlite3
+.instance/
+*.log
+
+# Node
+node_modules/
+dist/
+build/
+
+# Editors
+.vscode/
+.idea/
+.DS_Store
+
+# Env & secrets
+.env
+.env.*
+*.pem
+
+# Docker
+*.pid
+*.sock
+docker-data/

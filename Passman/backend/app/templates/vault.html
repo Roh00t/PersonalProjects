@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center;">
+  <h2>Vault</h2>
+  <div><span class="muted">Signed in as {{ username }}</span> · <a href="/logout">Logout</a></div>
+</div>
+
+<form method="post" action="/vault/add">
+  <label>Title</label>
+  <input name="title" required />
+  <label>URL</label>
+  <input name="url" />
+  <label>Username</label>
+  <input name="vusername" />
+  <label>Password / Secret</label>
+  <input name="secret" required />
+  <button type="submit">Save</button>
+</form>
+
+<table>
+  <thead><tr><th>Title</th><th>URL</th><th>Username</th><th>Secret</th><th class="right">Actions</th></tr></thead>
+  <tbody>
+    {% for i in items %}
+      <tr>
+        <td>{{ i.title }}</td>
+        <td><a href="{{ i.url }}" target="_blank" rel="noopener">{{ i.url }}</a></td>
+        <td>{{ i.username }}</td>
+        <td>{{ i.secret }}</td>
+        <td class="right">
+          <form method="post" action="/vault/delete" style="display:inline">
+            <input type="hidden" name="item_id" value="{{ i.id }}"/>
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
