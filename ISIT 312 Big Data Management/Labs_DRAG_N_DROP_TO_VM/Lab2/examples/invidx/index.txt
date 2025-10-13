@@ -1,0 +1,7 @@
+train long 
+bus small
+car passenger
+train fast
+bus full
+bus empty
+car fast

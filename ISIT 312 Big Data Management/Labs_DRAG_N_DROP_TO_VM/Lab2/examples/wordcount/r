@@ -1,0 +1,1 @@
+$HADOOP_HOME/bin/hadoop jar WordCount.jar WordCount WordCount.java /user/output/

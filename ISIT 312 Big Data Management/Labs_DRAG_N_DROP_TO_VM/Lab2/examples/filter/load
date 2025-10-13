@@ -1,0 +1,1 @@
+hadoop fs -put sales.txt /user/input/sales.txt

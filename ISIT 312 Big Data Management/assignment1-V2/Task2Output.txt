@@ -1,0 +1,271 @@
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ ls
+SpeedCamera.txt
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ cd ~/Desktop/assignment1/task2
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ ls -lh SpeedCamera.txt
+-rw-rw-rw- 1 bigdata bigdata 632 Oct  1 21:52 SpeedCamera.txt
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ cat SpeedCamera.txt
+PKR856 AYE 14-NOV-2024 110
+UPS234 CTE 20-FEB-2025 90
+PKR856 AYE 20-MAR-2025 92
+PKR856 BKE 17-JUN-2025 78
+UPS234 BKE 22-SEP-2024 92
+UPS234 NSC 03-AUG-2025 80
+PKR856 AYE 24-DEC-2024 80
+UPS234 ECP 20-FEB-2025 80
+PKR856 MCE 20-MAR-2025 100
+PKR856 TPE 17-JUN-2025 95
+UPS234 ECP 22-SEP-2024 89
+UPS234 AYE 03-AUG-2025 108
+PKR856 ECP 14-NOV-2024 100
+UPS234 KJE 20-FEB-2025 110
+PKR856 MCE 20-MAR-2025 94
+PKR856 SLE 17-JUN-2025 100
+UPS234 KPE 22-SEP-2025 80
+UPS234 MCE 03-AUG-2025 83
+PKR856 TPE 14-NOV-2024 70
+UPS234 PIE 20-FEB-2025 80
+PKR856 PIE 20-MAR-2025 90
+PKR856 CTE 17-JUN-2025 70
+UPS234 TPE 22-SEP-2025 102
+UPS234 KJE 03-AUG-2025 78
+
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ hdfs dfs -mkdir -p /assign1/task2/in
+25/10/01 22:22:09 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ hdfs dfs -put -f SpeedCamera.txt /assign1/task2/in/
+25/10/01 22:22:11 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ hdfs dfs -ls /assign1/task2/in
+25/10/01 22:22:12 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+-rw-r--r--   1 bigdata supergroup        632 2025-10-01 22:22 /assign1/task2/in/SpeedCamera.txt
+-rw-r--r--   1 bigdata supergroup        430 2025-09-27 11:54 /assign1/task2/in/rainfall.txt
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ hdfs dfs -cat /assign1/task2/in/SpeedCamera.txt
+25/10/01 22:22:13 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+PKR856 AYE 14-NOV-2024 110
+UPS234 CTE 20-FEB-2025 90
+PKR856 AYE 20-MAR-2025 92
+PKR856 BKE 17-JUN-2025 78
+UPS234 BKE 22-SEP-2024 92
+UPS234 NSC 03-AUG-2025 80
+PKR856 AYE 24-DEC-2024 80
+UPS234 ECP 20-FEB-2025 80
+PKR856 MCE 20-MAR-2025 100
+PKR856 TPE 17-JUN-2025 95
+UPS234 ECP 22-SEP-2024 89
+UPS234 AYE 03-AUG-2025 108
+PKR856 ECP 14-NOV-2024 100
+UPS234 KJE 20-FEB-2025 110
+PKR856 MCE 20-MAR-2025 94
+PKR856 SLE 17-JUN-2025 100
+UPS234 KPE 22-SEP-2025 80
+UPS234 MCE 03-AUG-2025 83
+PKR856 TPE 14-NOV-2024 70
+UPS234 PIE 20-FEB-2025 80
+PKR856 PIE 20-MAR-2025 90
+PKR856 CTE 17-JUN-2025 70
+UPS234 TPE 22-SEP-2025 102
+UPS234 KJE 03-AUG-2025 78
+
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ ls
+SpeedCamera.txt
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ ^C
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ gedit solution2.java
+
+(gedit:7785): Gtk-CRITICAL **: _gtk_widget_captured_event: assertion 'WIDGET_REALIZED_FOR_EVENT (widget, event)' failed
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ ls
+solution2.java  solution2.java~  SpeedCamera.txt
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ cat solution2.java
+// Student Name: Rohit Panda
+// Student UOWID: 8943060
+
+
+import java.io.IOException;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+public class solution2 {
+
+    // Mapper Class
+    public static class SpeedMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+        private final static IntWritable speedVal = new IntWritable();
+        private Text carLoc = new Text();
+
+        @Override
+        public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            String[] parts = value.toString().split("\\s+");
+            if (parts.length == 4) {
+                String car = parts[0];
+                String location = parts[1];
+                int speed = Integer.parseInt(parts[3]);
+
+                // Only keep records where speed > 90
+                if (speed > 90) {
+                    carLoc.set(car + " " + location);
+                    speedVal.set(speed);
+                    context.write(carLoc, speedVal);
+                }
+            }
+        }
+    }
+
+    // Reducer Class
+    public static class AvgReducer extends Reducer<Text, IntWritable, Text, DoubleWritable> {
+        @Override
+        public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+            int sum = 0;
+            int count = 0;
+
+            for (IntWritable val : values) {
+                sum += val.get();
+                count++;
+            }
+
+            if (count > 0) {
+                double avg = (double) sum / count;
+                context.write(key, new DoubleWritable(avg));
+            }
+        }
+    }
+
+    // Driver Method
+    public static void main(String[] args) throws Exception {
+        if (args.length != 2) {
+            System.err.println("Usage: solution2 <input path> <output path>");
+            System.exit(-1);
+        }
+
+        Configuration conf = new Configuration();
+        Job job = Job.getInstance(conf, "Speed Camera Average");
+
+        job.setJarByClass(solution2.class);
+        job.setMapperClass(SpeedMapper.class);
+        job.setReducerClass(AvgReducer.class);
+
+        // Mapper outputs
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(IntWritable.class);
+
+        // Reducer outputs
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(DoubleWritable.class);
+
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
+}
+
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ rm -rf classes && mkdir classes
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ javac -classpath "$(hadoop classpath)" -d classes solution2.java
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ jar -cvf solution2.jar -C classes .
+added manifest
+adding: solution2$SpeedMapper.class(in = 2117) (out= 888)(deflated 58%)
+adding: solution2$AvgReducer.class(in = 1720) (out= 737)(deflated 57%)
+adding: solution2.class(in = 1742) (out= 947)(deflated 45%)
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ hdfs dfs -rm -r -f /assign1/task2/out
+25/10/01 22:26:24 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+25/10/01 22:26:24 INFO fs.TrashPolicyDefault: Namenode trash configuration: Deletion interval = 0 minutes, Emptier interval = 0 minutes.
+Deleted /assign1/task2/out
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ 
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ hadoop jar solution2.jar solution2 \
+>   /assign1/task2/in/SpeedCamera.txt \
+>   /assign1/task2/out
+25/10/01 22:26:25 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+25/10/01 22:26:26 INFO client.RMProxy: Connecting to ResourceManager at localhost/127.0.0.1:8032
+25/10/01 22:26:26 WARN mapreduce.JobResourceUploader: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+25/10/01 22:26:27 INFO input.FileInputFormat: Total input paths to process : 1
+25/10/01 22:26:27 INFO mapreduce.JobSubmitter: number of splits:1
+25/10/01 22:26:27 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1759319305329_0001
+25/10/01 22:26:27 INFO impl.YarnClientImpl: Submitted application application_1759319305329_0001
+25/10/01 22:26:27 INFO mapreduce.Job: The url to track the job: http://bigdata-VirtualBox:8088/proxy/application_1759319305329_0001/
+25/10/01 22:26:27 INFO mapreduce.Job: Running job: job_1759319305329_0001
+25/10/01 22:26:37 INFO mapreduce.Job: Job job_1759319305329_0001 running in uber mode : false
+25/10/01 22:26:37 INFO mapreduce.Job:  map 0% reduce 0%
+25/10/01 22:26:42 INFO mapreduce.Job:  map 100% reduce 0%
+25/10/01 22:26:48 INFO mapreduce.Job:  map 100% reduce 100%
+25/10/01 22:26:48 INFO mapreduce.Job: Job job_1759319305329_0001 completed successfully
+25/10/01 22:26:48 INFO mapreduce.Job: Counters: 49
+	File System Counters
+		FILE: Number of bytes read=193
+		FILE: Number of bytes written=238341
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=751
+		HDFS: Number of bytes written=150
+		HDFS: Number of read operations=6
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+	Job Counters 
+		Launched map tasks=1
+		Launched reduce tasks=1
+		Data-local map tasks=1
+		Total time spent by all maps in occupied slots (ms)=2785
+		Total time spent by all reduces in occupied slots (ms)=3461
+		Total time spent by all map tasks (ms)=2785
+		Total time spent by all reduce tasks (ms)=3461
+		Total vcore-milliseconds taken by all map tasks=2785
+		Total vcore-milliseconds taken by all reduce tasks=3461
+		Total megabyte-milliseconds taken by all map tasks=2851840
+		Total megabyte-milliseconds taken by all reduce tasks=3544064
+	Map-Reduce Framework
+		Map input records=25
+		Map output records=11
+		Map output bytes=165
+		Map output materialized bytes=193
+		Input split bytes=119
+		Combine input records=0
+		Combine output records=0
+		Reduce input groups=9
+		Reduce shuffle bytes=193
+		Reduce input records=11
+		Reduce output records=9
+		Spilled Records=22
+		Shuffled Maps =1
+		Failed Shuffles=0
+		Merged Map outputs=1
+		GC time elapsed (ms)=150
+		CPU time spent (ms)=1340
+		Physical memory (bytes) snapshot=443486208
+		Virtual memory (bytes) snapshot=3827699712
+		Total committed heap usage (bytes)=321912832
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=632
+	File Output Format Counters 
+		Bytes Written=150
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ hdfs dfs -ls /assign1/task2/out
+25/10/01 22:26:56 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+-rw-r--r--   1 bigdata supergroup          0 2025-10-01 22:26 /assign1/task2/out/_SUCCESS
+-rw-r--r--   1 bigdata supergroup        150 2025-10-01 22:26 /assign1/task2/out/part-r-00000
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ hdfs dfs -cat /assign1/task2/out/part-r-00000
+25/10/01 22:26:57 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+PKR856 AYE	101.0
+PKR856 ECP	100.0
+PKR856 MCE	97.0
+PKR856 SLE	100.0
+PKR856 TPE	95.0
+UPS234 AYE	108.0
+UPS234 BKE	92.0
+UPS234 KJE	110.0
+UPS234 TPE	102.0
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task2$ 

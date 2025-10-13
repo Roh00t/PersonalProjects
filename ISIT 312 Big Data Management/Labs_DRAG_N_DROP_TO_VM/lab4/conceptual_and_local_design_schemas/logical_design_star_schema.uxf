@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>312</x>
+      <y>240</y>
+      <w>104</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>Month
+--
+_Month_ID_
+monthName
+yearNumber
+bg=#f5f5f5
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>488</x>
+      <y>96</y>
+      <w>104</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>Project
+--
+_Project_ID_
+name
+deadline
+bg=#f5f5f5
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>664</x>
+      <y>240</y>
+      <w>104</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>Department
+--
+_Department_ID_
+departmentName
+cityName
+countryName
+mission
+bg=#f5f5f5
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>488</x>
+      <y>408</y>
+      <w>104</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>Employee
+--
+_Employee_ID_
+e#
+full_name
+bg=#f5f5f5
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>488</x>
+      <y>240</y>
+      <w>104</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>EMPLOYMENT
+--
+_Month_ID_
+_Project_ID_
+_Employee_ID_
+_Department_ID_
+_City_ID_
+length
+salary
+bg=#dddddd
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>584</x>
+      <y>272</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=black
+</panel_attributes>
+    <additional_attributes>100.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>528</x>
+      <y>184</y>
+      <w>24</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=black
+</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>408</x>
+      <y>272</y>
+      <w>96</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=black
+</panel_attributes>
+    <additional_attributes>10.0;20.0;100.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>528</x>
+      <y>352</y>
+      <w>24</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+bg=black
+</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>240</x>
+      <y>120</y>
+      <w>192</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>This is a star schema.
+All level tables are flat and not normalised.
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

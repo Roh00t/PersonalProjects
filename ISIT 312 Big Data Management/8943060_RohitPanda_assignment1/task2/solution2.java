@@ -1,0 +1,88 @@
+// Student Name: Rohit Panda
+// Student UOW ID: 8943060
+// Solution 2
+
+import java.io.IOException;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+public class solution2 {
+
+    // Mapper Class
+    public static class SpeedMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+        private final static IntWritable speedVal = new IntWritable();
+        private Text carLoc = new Text();
+
+        @Override
+        public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            String[] parts = value.toString().split("\\s+");
+            if (parts.length == 4) {
+                String car = parts[0];
+                String location = parts[1];
+                int speed = Integer.parseInt(parts[3]);
+
+                // Only keep records where speed > 90
+                if (speed > 90) {
+                    carLoc.set(car + " - " + location);
+                    speedVal.set(speed);
+                    context.write(carLoc, speedVal);
+                }
+            }
+        }
+    }
+
+    // Reducer Class
+    public static class AvgReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+        @Override
+        public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+            int sum = 0;
+            int count = 0;
+
+            for (IntWritable val : values) {
+                sum += val.get();
+                count++;
+            }
+
+            if (count > 0) {
+                int avg = sum / count;  // Integer division
+                context.write(key, new IntWritable(avg));
+            }
+        }
+    }
+
+    // Driver Method
+    public static void main(String[] args) throws Exception {
+        if (args.length != 2) {
+            System.err.println("Usage: solution2 <input path> <output path>");
+            System.exit(-1);
+        }
+
+        Configuration conf = new Configuration();
+        Job job = Job.getInstance(conf, "Speed Camera Average");
+
+        job.setJarByClass(solution2.class);
+        job.setMapperClass(SpeedMapper.class);
+        job.setReducerClass(AvgReducer.class);
+
+        // Mapper outputs
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(IntWritable.class);
+
+        // Reducer outputs
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
+}

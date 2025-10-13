@@ -1,0 +1,2 @@
+$HADOOP_HOME/bin/hadoop jar InvIdx.jar InvIdx index.txt /user/output/
+

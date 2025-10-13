@@ -1,0 +1,2 @@
+ jar cf WordCount.jar WordCount*.class
+

@@ -1,0 +1,58 @@
+val shakes = spark.read.textFile("<your path>/shakespeare.txt")
+val swlist = spark.read.textFile("<your path>/stop-word-list.csv")
+val shakeswords = shakes.flatMap(x => x.split("\\W+")).map(_.toLowerCase.trim).filter(_.length>0)
+shakeswords.createOrReplaceTempView("shakeswords")
+val stopwords = swlist.flatMap(x=>x.split(",")).map(_.trim)
+stopwords.createOrReplaceTempView("stopwords")
+
+//solution one
+val shakesWC = spark.sql("""
+     | SELECT *, COUNT(value) AS count
+     | FROM shakewords 
+     | GROUP BY value
+     | """.stripMargin)
+shakesWC.createOrReplaceTempView("shakesWC")
+val res = spark.sql("""
+     |select * from shakesWC
+     | left anti join stopwords
+     | on shakesWC.value = stopwords.value
+     | order by shakesWC.count desc
+     |""".stripMargin)
+
+//alternative solution (by Nan)
+val res1 = spark.sql("""SELECT shakeswords.value, COUNT(*) AS count
+| FROM shakeswords
+| left anti join stopwords
+| on shakeswords.value = stopwords.value
+| GROUP BY shakeswords.value
+| order by count desc
+|""".stripMargin)
+
+/*
+scala> res.show(20)
++-----+-----+
+|value|count|
++-----+-----+
+|    d| 8608|
+|    s| 7264|
+| thou| 5443|
+|  thy| 3812|
+|shall| 3608|
+| thee| 3104|
+|    o| 3050|
+| good| 2888|
+|  now| 2805|
+| lord| 2747|
+| come| 2567|
+|  sir| 2543|
+|   ll| 2480|
+| here| 2366|
+| more| 2293|
+| well| 2280|
+| love| 2010|
+|  man| 1987|
+| hath| 1917|
+| know| 1763|
++-----+-----+
+only showing top 20 rows
+*/

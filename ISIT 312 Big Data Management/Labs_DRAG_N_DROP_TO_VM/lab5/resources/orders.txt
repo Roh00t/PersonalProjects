@@ -1,0 +1,10 @@
+bolt,James,200,2016,01,01
+bolt,Peter,100,2017,01,30
+bolt,Bob,300,2018,05,23
+screw,James,20,2017,05,11
+screw,Alice,55,2018,01,01
+nut,Alice,23,2018,03,16
+washer,James,45,2016,04,24
+washer,Peter,100,2016,05,12
+bolt,James,200,2018,01,05
+bolt,Peter,100,2018,01,05

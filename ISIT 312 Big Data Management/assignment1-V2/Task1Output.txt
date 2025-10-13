@@ -1,0 +1,96 @@
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ # Create HDFS input folder
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ hdfs dfs -mkdir -p /assign1/task1/in
+25/10/01 22:16:14 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ 
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ # Upload both files to HDFS
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ hdfs dfs -put -f sales.txt /assign1/task1/in/
+25/10/01 22:16:16 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ hdfs dfs -put -f SpeedCamera.txt /assign1/task1/in/
+25/10/01 22:16:17 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ 
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ # Verify
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ hdfs dfs -ls /assign1/task1/in
+25/10/01 22:16:19 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 2 items
+-rw-r--r--   1 bigdata supergroup        632 2025-10-01 22:16 /assign1/task1/in/SpeedCamera.txt
+-rw-r--r--   1 bigdata supergroup        286 2025-10-01 22:16 /assign1/task1/in/sales.txt
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ hdfs dfs -cat /assign1/task1/in/sales.txt | head
+25/10/01 22:16:20 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+bolt 45
+washer 7
+bolt 51
+washer 10
+screw 48
+screw 13
+nail 50
+washer 3
+washer 56
+screw 28
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ hdfs dfs -cat /assign1/task1/in/SpeedCamera.txt | head
+25/10/01 22:16:22 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+PKR856 AYE 14-NOV-2024 110
+UPS234 CTE 20-FEB-2025 90
+PKR856 AYE 20-MAR-2025 92
+PKR856 BKE 17-JUN-2025 78
+UPS234 BKE 22-SEP-2024 92
+UPS234 NSC 03-AUG-2025 80
+PKR856 AYE 24-DEC-2024 80
+UPS234 ECP 20-FEB-2025 80
+PKR856 MCE 20-MAR-2025 100
+PKR856 TPE 17-JUN-2025 95
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ rm -rf classes && mkdir classes
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ javac -classpath "$(hadoop classpath)" -d classes solution1.java
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ jar -cvf solution1.jar -C classes .
+added manifest
+adding: solution1.class(in = 2553) (out= 1259)(deflated 50%)
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ ls -lh solution1.jar
+-rw-rw-r-- 1 bigdata bigdata 1.7K Oct  1 22:16 solution1.jar
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ # Clean old output if exists
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ hdfs dfs -rm -r -f /assign1/task1/out
+25/10/01 22:17:23 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ 
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ # Run the job with your actual input files
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ hadoop jar solution1.jar solution1 \
+>   /assign1/task1/in/sales.txt \
+>   /assign1/task1/in/SpeedCamera.txt \
+>   /assign1/task1/out/merged.txt
+25/10/01 22:17:24 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Merging files...
+Input file 1: /assign1/task1/in/sales.txt
+Input file 2: /assign1/task1/in/SpeedCamera.txt
+Output file: /assign1/task1/out/merged.txt
+
+Copying first file...
+First file copied successfully.
+Copying second file...
+Second file copied successfully.
+
+Files merged successfully!
+Merged file created at: /assign1/task1/out/merged.txt
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ hdfs dfs -ls /assign1/task1/out
+25/10/01 22:17:37 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Found 1 items
+-rw-r--r--   1 bigdata supergroup        918 2025-10-01 22:17 /assign1/task1/out/merged.txt
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ hdfs dfs -cat /assign1/task1/out/merged.txt | head -20
+25/10/01 22:17:38 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+bolt 45
+washer 7
+bolt 51
+washer 10
+screw 48
+screw 13
+nail 50
+washer 3
+washer 56
+screw 28
+bolt 25
+bolt 10
+screw 67
+screw 23
+nail 5
+screw 78
+bolt 5
+bolt 1
+drill 1
+drill 1
+bigdata@bigdata-VirtualBox:~/Desktop/assignment1/task1$ 
