@@ -1,0 +1,328 @@
+bigdata@bigdata-VirtualBox:~$ $HBASE_HOME/bin/hbase shell
+2025-11-06 14:40:03,609 WARN  [main] util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/share/hbase-1.2.6/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/bigdata/hadoop/hadoop-2.7.3/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+HBase Shell; enter 'help<RETURN>' for list of supported commands.
+Type "exit<RETURN>" to leave the HBase Shell
+Version 1.2.6, rUnknown, Mon May 29 02:25:32 CDT 2017
+
+
+hbase(main):003:0> load '/home/bigdata/Desktop/assignment3/solution1.hb'
+0 row(s) in 1.5540 seconds
+
+Updating all regions with the new schema...
+1/1 regions updated.
+Done.
+0 row(s) in 2.1090 seconds
+
+Table VEHICLE_REPAIR is ENABLED                                                                       
+VEHICLE_REPAIR                                                                                        
+COLUMN FAMILIES DESCRIPTION                                                                           
+{NAME => 'OWNER', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => '
+FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', B
+LOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                  
+{NAME => 'REPAIR', BLOOMFILTER => 'ROW', VERSIONS => '3', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 
+'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', 
+BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                 
+{NAME => 'TIME', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'F
+ALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', BL
+OCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                   
+{NAME => 'VEHICLE', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS =>
+ 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0',
+ BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                
+4 row(s) in 0.0400 seconds
+
+0 row(s) in 0.1090 seconds
+
+0 row(s) in 0.0060 seconds
+
+0 row(s) in 0.0200 seconds
+
+0 row(s) in 0.0120 seconds
+
+0 row(s) in 0.0130 seconds
+
+0 row(s) in 0.0270 seconds
+
+0 row(s) in 0.0110 seconds
+
+0 row(s) in 0.0100 seconds
+
+0 row(s) in 0.0190 seconds
+
+0 row(s) in 0.0150 seconds
+
+0 row(s) in 0.0130 seconds
+
+0 row(s) in 0.0070 seconds
+
+0 row(s) in 0.0110 seconds
+
+0 row(s) in 0.0240 seconds
+
+0 row(s) in 0.0090 seconds
+
+0 row(s) in 0.0060 seconds
+
+0 row(s) in 0.0070 seconds
+
+0 row(s) in 0.0160 seconds
+
+0 row(s) in 0.0210 seconds
+
+0 row(s) in 0.0190 seconds
+
+0 row(s) in 0.0100 seconds
+
+0 row(s) in 0.0050 seconds
+
+0 row(s) in 0.0040 seconds
+
+0 row(s) in 0.0060 seconds
+
+0 row(s) in 0.0060 seconds
+
+0 row(s) in 0.0050 seconds
+
+0 row(s) in 0.0070 seconds
+
+0 row(s) in 0.0070 seconds
+
+0 row(s) in 0.0060 seconds
+
+0 row(s) in 0.0080 seconds
+
+0 row(s) in 0.0100 seconds
+
+0 row(s) in 0.0140 seconds
+
+0 row(s) in 0.0070 seconds
+
+0 row(s) in 0.0060 seconds
+
+0 row(s) in 0.0110 seconds
+
+0 row(s) in 0.0120 seconds
+
+0 row(s) in 0.0030 seconds
+
+0 row(s) in 0.0490 seconds
+
+0 row(s) in 0.0160 seconds
+
+0 row(s) in 0.0060 seconds
+
+0 row(s) in 0.0060 seconds
+
+0 row(s) in 0.0150 seconds
+
+0 row(s) in 0.0090 seconds
+
+0 row(s) in 0.0060 seconds
+
+0 row(s) in 0.0110 seconds
+
+0 row(s) in 0.0230 seconds
+
+0 row(s) in 0.0250 seconds
+
+0 row(s) in 0.0390 seconds
+
+0 row(s) in 0.0190 seconds
+
+0 row(s) in 0.0290 seconds
+
+0 row(s) in 0.0180 seconds
+
+0 row(s) in 0.0050 seconds
+
+TABLE                                                                                                 
+Company                                                                                               
+VEHICLE_REPAIR                                                                                        
+task2                                                                                                 
+3 row(s) in 0.0140 seconds
+
+ROW                        COLUMN+CELL                                                                
+ owner:001                 column=OWNER:first-name, timestamp=1762400561156, value=John               
+ owner:001                 column=OWNER:last-name, timestamp=1762400561162, value=Smith               
+ owner:001                 column=OWNER:licence-number, timestamp=1762400561140, value=L001           
+ owner:001                 column=OWNER:phone, timestamp=1762400561183, value=555-0101                
+ owner:002                 column=OWNER:first-name, timestamp=1762400561496, value=Sarah              
+ owner:002                 column=OWNER:last-name, timestamp=1762400561502, value=Johnson             
+ owner:002                 column=OWNER:licence-number, timestamp=1762400561486, value=L002           
+ owner:002                 column=OWNER:phone, timestamp=1762400561510, value=555-0202                
+ repair:V001|R001          column=REPAIR:complexity-level, timestamp=1762400561301, value=medium      
+ repair:V001|R001          column=REPAIR:labour-cost, timestamp=1762400561264, value=250.00           
+ repair:V001|R001          column=REPAIR:parts-cost, timestamp=1762400561284, value=150.00            
+ repair:V001|R001          column=TIME:day, timestamp=1762400561318, value=15                         
+ repair:V001|R001          column=TIME:end-date, timestamp=1762400561374, value=2025-10-17            
+ repair:V001|R001          column=TIME:month, timestamp=1762400561340, value=10                       
+ repair:V001|R001          column=TIME:start-date, timestamp=1762400561367, value=2025-10-15          
+ repair:V001|R001          column=TIME:year, timestamp=1762400561356, value=2025                      
+ repair:V001|R001          column=VEHICLE:registration, timestamp=1762400561312, value=ABC123         
+ repair:V001|R002          column=REPAIR:complexity-level, timestamp=1762400561429, value=low         
+ repair:V001|R002          column=REPAIR:labour-cost, timestamp=1762400561383, value=180.00           
+ repair:V001|R002          column=REPAIR:parts-cost, timestamp=1762400561410, value=95.50             
+ repair:V001|R002          column=TIME:day, timestamp=1762400561451, value=5                          
+ repair:V001|R002          column=TIME:end-date, timestamp=1762400561476, value=2025-11-06            
+ repair:V001|R002          column=TIME:month, timestamp=1762400561456, value=11                       
+ repair:V001|R002          column=TIME:start-date, timestamp=1762400561466, value=2025-11-05          
+ repair:V001|R002          column=TIME:year, timestamp=1762400561460, value=2025                      
+ repair:V001|R002          column=VEHICLE:registration, timestamp=1762400561445, value=ABC123         
+ repair:V002|R001          column=REPAIR:complexity-level, timestamp=1762400561580, value=high        
+ repair:V002|R001          column=REPAIR:labour-cost, timestamp=1762400561557, value=320.00           
+ repair:V002|R001          column=REPAIR:parts-cost, timestamp=1762400561568, value=275.00            
+ repair:V002|R001          column=TIME:day, timestamp=1762400561646, value=20                         
+ repair:V002|R001          column=TIME:end-date, timestamp=1762400561692, value=2025-10-23            
+ repair:V002|R001          column=TIME:month, timestamp=1762400561659, value=10                       
+ repair:V002|R001          column=TIME:start-date, timestamp=1762400561676, value=2025-10-20          
+ repair:V002|R001          column=TIME:year, timestamp=1762400561666, value=2025                      
+ repair:V002|R001          column=VEHICLE:registration, timestamp=1762400561629, value=XYZ789         
+ repair:V002|R002          column=REPAIR:complexity-level, timestamp=1762400561732, value=low         
+ repair:V002|R002          column=REPAIR:labour-cost, timestamp=1762400561698, value=145.00           
+ repair:V002|R002          column=REPAIR:parts-cost, timestamp=1762400561706, value=85.00             
+ repair:V002|R002          column=TIME:day, timestamp=1762400561816, value=8                          
+ repair:V002|R002          column=TIME:end-date, timestamp=1762400561906, value=2025-11-09            
+ repair:V002|R002          column=TIME:month, timestamp=1762400561833, value=11                       
+ repair:V002|R002          column=TIME:start-date, timestamp=1762400561897, value=2025-11-08          
+ repair:V002|R002          column=TIME:year, timestamp=1762400561881, value=2025                      
+ repair:V002|R002          column=VEHICLE:registration, timestamp=1762400561771, value=XYZ789         
+ vehicle:V001              column=OWNER:licence-number, timestamp=1762400561253, value=L001           
+ vehicle:V001              column=VEHICLE:make, timestamp=1762400561222, value=Toyota                 
+ vehicle:V001              column=VEHICLE:model, timestamp=1762400561239, value=Camry                 
+ vehicle:V001              column=VEHICLE:registration, timestamp=1762400561203, value=ABC123         
+ vehicle:V002              column=OWNER:licence-number, timestamp=1762400561548, value=L002           
+ vehicle:V002              column=VEHICLE:make, timestamp=1762400561526, value=Honda                  
+ vehicle:V002              column=VEHICLE:model, timestamp=1762400561542, value=Accord                
+ vehicle:V002              column=VEHICLE:registration, timestamp=1762400561518, value=XYZ789         
+8 row(s) in 0.1590 seconds
+
+COLUMN                     CELL                                                                       
+ OWNER:first-name          timestamp=1762400561156, value=John                                        
+ OWNER:last-name           timestamp=1762400561162, value=Smith                                       
+ OWNER:licence-number      timestamp=1762400561140, value=L001                                        
+ OWNER:phone               timestamp=1762400561183, value=555-0101                                    
+4 row(s) in 0.0550 seconds
+
+COLUMN                     CELL                                                                       
+ OWNER:licence-number      timestamp=1762400561253, value=L001                                        
+ VEHICLE:make              timestamp=1762400561222, value=Toyota                                      
+ VEHICLE:model             timestamp=1762400561239, value=Camry                                       
+ VEHICLE:registration      timestamp=1762400561203, value=ABC123                                      
+4 row(s) in 0.0070 seconds
+
+ROW                        COLUMN+CELL                                                                
+ repair:V001|R001          column=REPAIR:complexity-level, timestamp=1762400561301, value=medium      
+ repair:V001|R001          column=REPAIR:labour-cost, timestamp=1762400561264, value=250.00           
+ repair:V001|R001          column=REPAIR:parts-cost, timestamp=1762400561284, value=150.00            
+ repair:V001|R001          column=TIME:day, timestamp=1762400561318, value=15                         
+ repair:V001|R001          column=TIME:end-date, timestamp=1762400561374, value=2025-10-17            
+ repair:V001|R001          column=TIME:month, timestamp=1762400561340, value=10                       
+ repair:V001|R001          column=TIME:start-date, timestamp=1762400561367, value=2025-10-15          
+ repair:V001|R001          column=TIME:year, timestamp=1762400561356, value=2025                      
+ repair:V001|R001          column=VEHICLE:registration, timestamp=1762400561312, value=ABC123         
+ repair:V001|R002          column=REPAIR:complexity-level, timestamp=1762400561429, value=low         
+ repair:V001|R002          column=REPAIR:labour-cost, timestamp=1762400561383, value=180.00           
+ repair:V001|R002          column=REPAIR:parts-cost, timestamp=1762400561410, value=95.50             
+ repair:V001|R002          column=TIME:day, timestamp=1762400561451, value=5                          
+ repair:V001|R002          column=TIME:end-date, timestamp=1762400561476, value=2025-11-06            
+ repair:V001|R002          column=TIME:month, timestamp=1762400561456, value=11                       
+ repair:V001|R002          column=TIME:start-date, timestamp=1762400561466, value=2025-11-05          
+ repair:V001|R002          column=TIME:year, timestamp=1762400561460, value=2025                      
+ repair:V001|R002          column=VEHICLE:registration, timestamp=1762400561445, value=ABC123         
+2 row(s) in 0.0460 seconds
+
+8 row(s) in 0.0260 seconds
+
+=> true
+hbase(main):004:0> list
+TABLE                                                                                                 
+Company                                                                                               
+VEHICLE_REPAIR                                                                                        
+task2                                                                                                 
+3 row(s) in 0.0250 seconds
+
+=> ["Company", "VEHICLE_REPAIR", "task2"]
+hbase(main):005:0> # Check table structure
+hbase(main):006:0* hbase(main):003:0> describe 'VEHICLE_REPAIR'
+Table VEHICLE_REPAIR is ENABLED                                                                       
+VEHICLE_REPAIR                                                                                        
+COLUMN FAMILIES DESCRIPTION                                                                           
+{NAME => 'OWNER', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => '
+FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', B
+LOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                  
+{NAME => 'REPAIR', BLOOMFILTER => 'ROW', VERSIONS => '3', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 
+'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', 
+BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                 
+{NAME => 'TIME', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => 'F
+ALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', BL
+OCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                   
+{NAME => 'VEHICLE', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS =>
+ 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0',
+ BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                
+4 row(s) in 0.0470 seconds
+
+hbase(main):011:0> scan 'VEHICLE_REPAIR'
+ROW                        COLUMN+CELL                                                                
+ owner:001                 column=OWNER:first-name, timestamp=1762400561156, value=John               
+ owner:001                 column=OWNER:last-name, timestamp=1762400561162, value=Smith               
+ owner:001                 column=OWNER:licence-number, timestamp=1762400561140, value=L001           
+ owner:001                 column=OWNER:phone, timestamp=1762400561183, value=555-0101                
+ owner:002                 column=OWNER:first-name, timestamp=1762400561496, value=Sarah              
+ owner:002                 column=OWNER:last-name, timestamp=1762400561502, value=Johnson             
+ owner:002                 column=OWNER:licence-number, timestamp=1762400561486, value=L002           
+ owner:002                 column=OWNER:phone, timestamp=1762400561510, value=555-0202                
+ repair:V001|R001          column=REPAIR:complexity-level, timestamp=1762400561301, value=medium      
+ repair:V001|R001          column=REPAIR:labour-cost, timestamp=1762400561264, value=250.00           
+ repair:V001|R001          column=REPAIR:parts-cost, timestamp=1762400561284, value=150.00            
+ repair:V001|R001          column=TIME:day, timestamp=1762400561318, value=15                         
+ repair:V001|R001          column=TIME:end-date, timestamp=1762400561374, value=2025-10-17            
+ repair:V001|R001          column=TIME:month, timestamp=1762400561340, value=10                       
+ repair:V001|R001          column=TIME:start-date, timestamp=1762400561367, value=2025-10-15          
+ repair:V001|R001          column=TIME:year, timestamp=1762400561356, value=2025                      
+ repair:V001|R001          column=VEHICLE:registration, timestamp=1762400561312, value=ABC123         
+ repair:V001|R002          column=REPAIR:complexity-level, timestamp=1762400561429, value=low         
+ repair:V001|R002          column=REPAIR:labour-cost, timestamp=1762400561383, value=180.00           
+ repair:V001|R002          column=REPAIR:parts-cost, timestamp=1762400561410, value=95.50             
+ repair:V001|R002          column=TIME:day, timestamp=1762400561451, value=5                          
+ repair:V001|R002          column=TIME:end-date, timestamp=1762400561476, value=2025-11-06            
+ repair:V001|R002          column=TIME:month, timestamp=1762400561456, value=11                       
+ repair:V001|R002          column=TIME:start-date, timestamp=1762400561466, value=2025-11-05          
+ repair:V001|R002          column=TIME:year, timestamp=1762400561460, value=2025                      
+ repair:V001|R002          column=VEHICLE:registration, timestamp=1762400561445, value=ABC123         
+ repair:V002|R001          column=REPAIR:complexity-level, timestamp=1762400561580, value=high        
+ repair:V002|R001          column=REPAIR:labour-cost, timestamp=1762400561557, value=320.00           
+ repair:V002|R001          column=REPAIR:parts-cost, timestamp=1762400561568, value=275.00            
+ repair:V002|R001          column=TIME:day, timestamp=1762400561646, value=20                         
+ repair:V002|R001          column=TIME:end-date, timestamp=1762400561692, value=2025-10-23            
+ repair:V002|R001          column=TIME:month, timestamp=1762400561659, value=10                       
+ repair:V002|R001          column=TIME:start-date, timestamp=1762400561676, value=2025-10-20          
+ repair:V002|R001          column=TIME:year, timestamp=1762400561666, value=2025                      
+ repair:V002|R001          column=VEHICLE:registration, timestamp=1762400561629, value=XYZ789         
+ repair:V002|R002          column=REPAIR:complexity-level, timestamp=1762400561732, value=low         
+ repair:V002|R002          column=REPAIR:labour-cost, timestamp=1762400561698, value=145.00           
+ repair:V002|R002          column=REPAIR:parts-cost, timestamp=1762400561706, value=85.00             
+ repair:V002|R002          column=TIME:day, timestamp=1762400561816, value=8                          
+ repair:V002|R002          column=TIME:end-date, timestamp=1762400561906, value=2025-11-09            
+ repair:V002|R002          column=TIME:month, timestamp=1762400561833, value=11                       
+ repair:V002|R002          column=TIME:start-date, timestamp=1762400561897, value=2025-11-08          
+ repair:V002|R002          column=TIME:year, timestamp=1762400561881, value=2025                      
+ repair:V002|R002          column=VEHICLE:registration, timestamp=1762400561771, value=XYZ789         
+ vehicle:V001              column=OWNER:licence-number, timestamp=1762400561253, value=L001           
+ vehicle:V001              column=VEHICLE:make, timestamp=1762400561222, value=Toyota                 
+ vehicle:V001              column=VEHICLE:model, timestamp=1762400561239, value=Camry                 
+ vehicle:V001              column=VEHICLE:registration, timestamp=1762400561203, value=ABC123         
+ vehicle:V002              column=OWNER:licence-number, timestamp=1762400561548, value=L002           
+ vehicle:V002              column=VEHICLE:make, timestamp=1762400561526, value=Honda                  
+ vehicle:V002              column=VEHICLE:model, timestamp=1762400561542, value=Accord                
+ vehicle:V002              column=VEHICLE:registration, timestamp=1762400561518, value=XYZ789         
+8 row(s) in 0.0850 seconds
+
+hbase(main):012:0> count 'VEHICLE_REPAIR'
+8 row(s) in 0.0300 seconds
+
+=> 8
+hbase(main):013:0> 

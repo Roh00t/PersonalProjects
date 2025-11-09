@@ -1,0 +1,220 @@
+bigdata@bigdata-VirtualBox:~$ $HBASE_HOME/bin/hbase shell
+2025-11-06 14:57:42,673 WARN  [main] util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/share/hbase-1.2.6/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/bigdata/hadoop/hadoop-2.7.3/share/hadoop/common/lib/slf4j-log4j12-1.7.10.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+HBase Shell; enter 'help<RETURN>' for list of supported commands.
+Type "exit<RETURN>" to leave the HBase Shell
+Version 1.2.6, rUnknown, Mon May 29 02:25:32 CDT 2017
+
+hbase(main):001:0> load '/home/bigdata/Desktop/assignment3/solution2.hb'
+TABLE                                                                                                 
+Company                                                                                               
+VEHICLE_REPAIR                                                                                        
+task2                                                                                                 
+3 row(s) in 0.2040 seconds
+
+
+--- (1) POSITION for number=312 (one version per cell) ---
+ROW                        COLUMN+CELL                                                                
+0 row(s) in 0.1390 seconds
+
+
+--- (2) APPLICATION for applicant=007, position=312 (one version per cell) ---
+ROW                        COLUMN+CELL                                                                
+0 row(s) in 0.0100 seconds
+
+
+--- (3) Deleting column family EMPLOYER ---
+0 row(s) in 2.3530 seconds
+
+
+ERROR: org.apache.hadoop.hbase.InvalidFamilyOperationException: Family 'EMPLOYER' does not exist, so it cannot be deleted
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.apache.hadoop.ipc.RemoteException.instantiateException(RemoteException.java:106)
+	at org.apache.hadoop.ipc.RemoteException.unwrapRemoteException(RemoteException.java:95)
+	at org.apache.hadoop.hbase.util.ForeignExceptionUtil.toIOException(ForeignExceptionUtil.java:45)
+	at org.apache.hadoop.hbase.procedure2.RemoteProcedureException.fromProto(RemoteProcedureException.java:114)
+	at org.apache.hadoop.hbase.master.procedure.ProcedureSyncWait.waitForProcedureToComplete(ProcedureSyncWait.java:85)
+	at org.apache.hadoop.hbase.master.HMaster$7.run(HMaster.java:2020)
+	at org.apache.hadoop.hbase.master.procedure.MasterProcedureUtil.submitProcedure(MasterProcedureUtil.java:133)
+	at org.apache.hadoop.hbase.master.HMaster.deleteColumn(HMaster.java:2006)
+	at org.apache.hadoop.hbase.master.MasterRpcServices.deleteColumn(MasterRpcServices.java:475)
+	at org.apache.hadoop.hbase.protobuf.generated.MasterProtos$MasterService$2.callBlockingMethod(MasterProtos.java:55658)
+	at org.apache.hadoop.hbase.ipc.RpcServer.call(RpcServer.java:2196)
+	at org.apache.hadoop.hbase.ipc.CallRunner.run(CallRunner.java:112)
+	at org.apache.hadoop.hbase.ipc.RpcExecutor.consumerLoop(RpcExecutor.java:133)
+	at org.apache.hadoop.hbase.ipc.RpcExecutor$1.run(RpcExecutor.java:108)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.apache.hadoop.ipc.RemoteException(org.apache.hadoop.hbase.InvalidFamilyOperationException): Family 'EMPLOYER' does not exist, so it cannot be deleted
+	at org.apache.hadoop.hbase.master.procedure.DeleteColumnFamilyProcedure.prepareDelete(DeleteColumnFamilyProcedure.java:279)
+	at org.apache.hadoop.hbase.master.procedure.DeleteColumnFamilyProcedure.executeFromState(DeleteColumnFamilyProcedure.java:91)
+	at org.apache.hadoop.hbase.master.procedure.DeleteColumnFamilyProcedure.executeFromState(DeleteColumnFamilyProcedure.java:48)
+	at org.apache.hadoop.hbase.procedure2.StateMachineProcedure.execute(StateMachineProcedure.java:119)
+	at org.apache.hadoop.hbase.procedure2.Procedure.doExecute(Procedure.java:498)
+	at org.apache.hadoop.hbase.procedure2.ProcedureExecutor.execProcedure(ProcedureExecutor.java:1147)
+	at org.apache.hadoop.hbase.procedure2.ProcedureExecutor.execLoop(ProcedureExecutor.java:942)
+	at org.apache.hadoop.hbase.procedure2.ProcedureExecutor.execLoop(ProcedureExecutor.java:895)
+	at org.apache.hadoop.hbase.procedure2.ProcedureExecutor.access$400(ProcedureExecutor.java:77)
+	at org.apache.hadoop.hbase.procedure2.ProcedureExecutor$2.run(ProcedureExecutor.java:497)
+
+Here is some help for this command:
+Alter a table. If the "hbase.online.schema.update.enable" property is set to
+false, then the table must be disabled (see help 'disable'). If the 
+"hbase.online.schema.update.enable" property is set to true, tables can be 
+altered without disabling them first. Altering enabled tables has caused problems 
+in the past, so use caution and test it before using in production. 
+
+You can use the alter command to add, 
+modify or delete column families or change table configuration options.
+Column families work in a similar way as the 'create' command. The column family
+specification can either be a name string, or a dictionary with the NAME attribute.
+Dictionaries are described in the output of the 'help' command, with no arguments.
+
+For example, to change or add the 'f1' column family in table 't1' from 
+current value to keep a maximum of 5 cell VERSIONS, do:
+
+  hbase> alter 't1', NAME => 'f1', VERSIONS => 5
+
+You can operate on several column families:
+
+  hbase> alter 't1', 'f1', {NAME => 'f2', IN_MEMORY => true}, {NAME => 'f3', VERSIONS => 5}
+
+To delete the 'f1' column family in table 'ns1:t1', use one of:
+
+  hbase> alter 'ns1:t1', NAME => 'f1', METHOD => 'delete'
+  hbase> alter 'ns1:t1', 'delete' => 'f1'
+
+You can also change table-scope attributes like MAX_FILESIZE, READONLY, 
+MEMSTORE_FLUSHSIZE, DURABILITY, etc. These can be put at the end;
+for example, to change the max size of a region to 128MB, do:
+
+  hbase> alter 't1', MAX_FILESIZE => '134217728'
+
+You can add a table coprocessor by setting a table coprocessor attribute:
+
+  hbase> alter 't1',
+    'coprocessor'=>'hdfs:///foo.jar|com.foo.FooRegionObserver|1001|arg1=1,arg2=2'
+
+Since you can have multiple coprocessors configured for a table, a
+sequence number will be automatically appended to the attribute name
+to uniquely identify it.
+
+The coprocessor attribute must match the pattern below in order for
+the framework to understand how to load the coprocessor classes:
+
+  [coprocessor jar file location] | class name | [priority] | [arguments]
+
+You can also set configuration settings specific to this table or column family:
+
+  hbase> alter 't1', CONFIGURATION => {'hbase.hregion.scan.loadColumnFamiliesOnDemand' => 'true'}
+  hbase> alter 't1', {NAME => 'f2', CONFIGURATION => {'hbase.hstore.blockingStoreFiles' => '10'}}
+
+You can also remove a table-scope attribute:
+
+  hbase> alter 't1', METHOD => 'table_att_unset', NAME => 'MAX_FILESIZE'
+
+  hbase> alter 't1', METHOD => 'table_att_unset', NAME => 'coprocessor$1'
+
+You can also set REGION_REPLICATION:
+
+  hbase> alter 't1', {REGION_REPLICATION => 2}
+
+There could be more than one alteration in one command:
+
+  hbase> alter 't1', { NAME => 'f1', VERSIONS => 3 }, 
+   { MAX_FILESIZE => '134217728' }, { METHOD => 'delete', NAME => 'f2' },
+   OWNER => 'johndoe', METADATA => { 'mykey' => 'myvalue' }
+
+
+0 row(s) in 1.3410 seconds
+
+
+Describe after deleting EMPLOYER:
+Table task2 is ENABLED                                                                                
+task2                                                                                                 
+COLUMN FAMILIES DESCRIPTION                                                                           
+{NAME => 'APPLICANT', BLOOMFILTER => 'ROW', VERSIONS => '5', IN_MEMORY => 'false', KEEP_DELETED_CELLS 
+=> 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0
+', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                              
+{NAME => 'FILES', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => '
+FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', B
+LOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                  
+{NAME => 'STUDENT', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS =>
+ 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0',
+ BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                
+{NAME => 'SUBJECT', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS =>
+ 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0',
+ BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                
+{NAME => 'SUBMISSION', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS
+ => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '
+0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                             
+5 row(s) in 0.0300 seconds
+
+
+--- (4) Populating POSITION:total-applications for all positions ---
+ROW                        COLUMN+CELL                                                                
+0 row(s) in 0.0330 seconds
+
+Computed application counts by position: {}
+
+Verify POSITION rows with total-applications:
+ROW                        COLUMN+CELL                                                                
+0 row(s) in 0.0290 seconds
+
+
+--- (5) Increasing APPLICANT VERSIONS to 5 ---
+0 row(s) in 2.3630 seconds
+
+Updating all regions with the new schema...
+1/1 regions updated.
+Done.
+0 row(s) in 2.4650 seconds
+
+0 row(s) in 1.3270 seconds
+
+
+Final table schema:
+Table task2 is ENABLED                                                                                
+task2                                                                                                 
+COLUMN FAMILIES DESCRIPTION                                                                           
+{NAME => 'APPLICANT', BLOOMFILTER => 'ROW', VERSIONS => '5', IN_MEMORY => 'false', KEEP_DELETED_CELLS 
+=> 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0
+', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                              
+{NAME => 'FILES', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS => '
+FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0', B
+LOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                  
+{NAME => 'STUDENT', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS =>
+ 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0',
+ BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                
+{NAME => 'SUBJECT', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS =>
+ 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '0',
+ BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                                
+{NAME => 'SUBMISSION', BLOOMFILTER => 'ROW', VERSIONS => '1', IN_MEMORY => 'false', KEEP_DELETED_CELLS
+ => 'FALSE', DATA_BLOCK_ENCODING => 'NONE', TTL => 'FOREVER', COMPRESSION => 'NONE', MIN_VERSIONS => '
+0', BLOCKCACHE => 'true', BLOCKSIZE => '65536', REPLICATION_SCOPE => '0'}                             
+5 row(s) in 0.0190 seconds
+
+
+--- End of solution2.hb ---
+=> true
+hbase(main):002:0> list
+TABLE                                                                                                 
+Company                                                                                               
+VEHICLE_REPAIR                                                                                        
+task2                                                                                                 
+3 row(s) in 0.0430 seconds
+
+=> ["Company", "VEHICLE_REPAIR", "task2"]
+hbase(main):003:0> decribe task2
+NameError: undefined local variable or method `task2' for #<Object:0x64ae105d>
+
+hbase(main):004:0> decribe 'task2'
+NoMethodError: undefined method `decribe' for #<Object:0x64ae105d>
+
+hbase(main):005:0> 
