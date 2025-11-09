@@ -1,0 +1,101 @@
+Exam sample 312 theory:
+------------------------------------------------------------------------------------------------------------------------------------
+1. What are the advantages of Spark compared with MapReduce?
+
+Ans:
+Speed: Spark processes data in-memory, which makes it significantly faster than MapReduce, which writes intermediate results to disk.
+
+Ease of use: Ease of Use: Spark provides high-level APIs in Java, Scala, Python, and R, making it easier to develop applications compared to the lower-level MapReduce API.
+
+Real-time processing: Spark Streaming allows for real-time data processing, while MapReduce is batch-oriented.
+------------------------------------------------------------------------------------------------------------------------------------
+
+2. what are the Advantages of Apache Spark over Apache Pig?
+
+Ans:
+Speed (In-Memory Processing): Spark processes data in-memory, making it much faster than Pig, which writes intermediate results to disk.
+
+Unified Platform (Versatility): Spark supports batch processing, streaming, SQL, machine learning, and graph processing, whereas Pig is limited to batch ETL.
+
+Optimized Execution: Spark uses the Catalyst Optimizer and DAG execution for more efficient data flow, unlike Pig's MapReduce jobs.
+------------------------------------------------------------------------------------------------------------------------------------
+
+3. Explain the three core layers in Apache Hadoop:
+
+Ans:
+HDFS (Hadoop Distributed File System): A distributed fi le storage system. It stores large files across multiple machines.
+Data is split into blocks and replicated for fault tolerance.
+
+YARN (Yet Another Resource Negotiator): Manages and schedules resources across the cluster. 
+It handles job scheduling and cluster resource management. 
+
+MapReduce: A programming model for processing large data sets with a distributed algorithm on the cluster. 
+It has two main tasks: the map (processing/filtering) and reduce (aggregation).
+------------------------------------------------------------------------------------------------------------------------------------
+
+4. What is similarity and difference between Hive and traditional relational database?
+
+Ans:
+Similarities:
+
+Both use SQL-like query language (Hive uses HQL which is similar to SQL)
+
+Both support table structures with rows and columns
+
+Both support partitioning and indexing for performance optimization
+
+Differences:
+
+Hive is built on Hadoop for big data processing, while traditional RDBMS is for structured data
+
+Hive uses schema-on-read (data verification happens at query time), while RDBMS uses schema-on-write (data verification at load time)
+
+Hive is optimized for batch processing, while RDBMS is optimized for transactional processing
+--------------------------------------------------------------------------------------------------------------------------------
+
+5. What is the difference between transformation and action in Spark?
+
+Ans:
+
+Transformation:
+ 
+These are operations that create a new dataset from an existing one (e.g., 'map', 'filter'). Transformations are lazy, meaning they are not executed until an action is called.
+
+Action: 
+
+These operations trigger the execution of transformations and return a value to the driver program or write data to an external storage system (e.g., 'count', 'collect').
+-------------------------------------------------------------------------------------------------------------------------
+
+6. The Similarity of Data Processing between Apache Pig and Apache Spark?
+
+Ans:
+
+Both Apache Pig and Apache Spark offer high-level abstractions for distributed computing, allowing users to define data transformations (e.g., load, filter, join, aggregate) without manually coding low-level MapReduce tasks.
+
+Pig converts scripts into MapReduce jobs.
+
+Spark converts operations into a Directed Acyclic Graph (DAG) of tasks.
+----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
